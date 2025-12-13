@@ -1,0 +1,126 @@
+.footer {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    padding-block: fluid(60, 20);
+    padding-inline: fluid(100, 20);
+    gap: fluid(50,20);
+    background-color: var(--color-gray-80);
+    border: none;
+    border-radius: 50px 50px 0 0;
+    @include mobile{
+        padding-inline: fluid(70, 30);
+        padding-block: 30px;
+    }
+    &-navigation-to {
+        font-size: fluid(15,5);
+    }
+    &-main-text {
+        font-size: fluid(20, 5);
+    }
+    &-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    &-top {
+        display: flex;
+        justify-content: space-between;
+        @include mobile {
+            display: flex;
+            flex-direction: column;
+            gap: fluid(40,20);
+        }
+    }
+    &-item {
+        display: flex;
+        flex-direction: column;
+        gap: fluid(20,10);
+        font-size: fluid(15,5);
+        &-header {
+            display: flex;
+            flex-direction: column;
+            @include mobile {
+                flex-direction: row;
+                gap: 20px;
+                justify-content: center;
+                align-items: center;
+            }
+            
+            &-slog {
+                width: 250px;
+                @include mobile {
+                    width: 60%;
+                    font-size: fluid(50, 10);
+                }
+            }
+        }
+    }
+    &-contacts {
+        @include mobile {
+            gap: fluid(50,10);
+        }
+        &-wait {
+            @include mobile {
+                font-size: fluid(40,10);
+            }
+        }
+        &-ooo {
+            font-size: fluid(12,5);
+        }
+        &-social {
+            display: flex;
+            flex-direction: column;
+            gap: fluid(10,5);
+            &-text {
+                @include mobile {
+                    font-size: fluid(40,10);
+                }
+            }
+        }
+        &-list {
+            display: flex;
+            gap:fluid(15,5);
+            @include mobile {
+                gap: fluid(20,10);
+            }
+            &-item {
+                width: fluid(30,15);;
+                height: auto;
+                @include mobile {
+                    width: fluid(100, 20);
+                    height: auto;
+                }
+            }
+        }
+    }
+    &-nothing-line {
+        content: "";
+        height: 0.7px;
+        width: 100%;
+        // background-color: #f5f5f5;
+        background-color: var(--color-gray-70);
+        @include mobile {
+            height: 0.4px;
+        }
+    }
+    &-bottom {
+        display: flex;
+        justify-content: space-between;
+        font-size: fluid(15, 10);
+        @include mobile {
+            flex-direction: column;
+            gap: fluid(50,10);
+            font-size: fluid(40,10);
+        }
+        &-creators a{
+            font-size: fluid(15,10);
+            @include mobile {
+                font-size: fluid(40,10);
+            }
+        }
+    }
+}
+.somebody {
+    text-transform: lowercase;
+}

@@ -1,0 +1,14 @@
+
+.catalog-header {
+    padding-inline: 10vw;
+    padding-top: 3vw;
+    font-weight: 600;
+    font-size: fluid(45,5);
+    span {
+      font-weight: 400;
+    }
+    @include mobile {
+      margin-top: fluid(300, 120);
+      font-size: 3.9vw;
+    }
+  }

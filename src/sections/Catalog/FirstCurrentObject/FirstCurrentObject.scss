@@ -1,0 +1,457 @@
+$size: fluid(50, 6);
+$thickness: fluid(5, 2.8);
+$angle: 40deg;
+$angleHover: 30deg;
+$angleActive: 25deg;
+
+@mixin arrowTransform( $angle, $x: 0, $y: 0 ) {
+  i:first-child {
+    transform: translate( $x, $y ) rotate( $angle );
+  }
+
+  i:last-child {
+    transform: translate( $x, -$y ) rotate( -$angle );
+  }
+}
+
+.roulette-all {
+    position: relative;
+}
+
+.paginate {
+    position: relative;
+    appearance: none;
+    background: transparent;
+    border: 0;
+    outline: 0;
+  position: relative;
+  margin: 0;
+  width: $size;
+  height: $size;
+  cursor: pointer;
+  transform: translate3d(0,0,0); // fixes flicker in webkit
+  position: absolute;
+  top: 50%;
+  margin-top: -20px;
+  filter: drop-shadow( 0 2px 0px rgba(0,0,0,0.2) );
+  i {
+    position: absolute;
+    top: 40%;
+    left: 0;
+    width: $size;
+    height: $thickness;
+    border-radius: calc($thickness / 2);
+    background: var(--color-blue-dark);
+
+    transition: all 0.15s ease;
+    @include mobile {
+        width: 5.6vw;
+        height: calc($thickness * 1.3);
+    }
+  }
+
+  &.left {
+    top: 15.5vw;
+    @include mobile-above {
+        left: -3.5vw;
+    }
+    @include mobile {
+        left: -7vw;
+        top: 28vw;
+    }
+    i {
+      transform-origin: 0% 50%
+    }
+
+    @include arrowTransform( $angle, 0, -1px );
+
+    &:hover {
+      @include arrowTransform( $angleHover, 0, -1px );
+    }
+
+    &:active {
+      @include arrowTransform( $angleActive, 1px, -1px );
+    }
+
+    &[data-state=disabled] {
+      @include arrowTransform( 0deg, -5px, 0 );
+
+      &:hover {
+        @include arrowTransform( 0deg, -5px, 0 );
+      }
+    }
+  }
+
+  &.right {
+    top: 15.5vw;
+    @include mobile-above {
+        right: -3.5vw;
+    }
+    @include mobile {
+        right: -4.8vw;
+        top: 28vw;
+    }
+    i {
+      transform-origin: 100% 50%
+    }
+
+    @include arrowTransform( $angle, 0, 1px );
+
+    &:hover {
+      @include arrowTransform( $angleHover, 0, 1px );
+    }
+
+    &:active {
+      @include arrowTransform( $angleActive, 1px, 1px );
+    }
+
+    &[data-state=disabled] {
+      @include arrowTransform( 0deg, 5px, 0 );
+
+      &:hover {
+        @include arrowTransform( 0deg, 5px, 0 );
+      }
+    }
+  }
+
+  &[data-state=disabled] {
+    opacity: 0.3;
+    cursor: default;
+  }
+}
+
+// страница
+
+
+.current-object {
+    &-section {
+        padding-inline: 10vw;
+        padding-top: 3vw;
+        @include mobile {
+            margin-top: fluid(300, 120);
+        }
+    }
+}
+.object-header {
+    font-weight: 500;
+    font-size: fluid(40,15);
+    @include mobile {
+        font-size: 4.2vw;
+    }
+}
+
+.case {
+    &-inner {
+        padding-block: 2vw;
+        display: flex;
+        justify-content: space-between;
+        @include mobile {
+            flex-direction: column;
+            gap: 7vw;
+        }
+    }
+    &-left {
+        width: 45vw;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: fluid(30,5);
+        position: relative;
+        &-wrapper {
+            position: relative;
+        }
+        @include mobile {
+            width: 100%;
+            gap: 2.6vw;
+        }
+    }
+    &-right {
+        width: 26vw;
+        display: flex;
+        flex-direction: column;
+        gap: fluid-to-laptop(50, 30);
+        @include mobile {
+            width: 100%;
+        }
+    }
+}
+
+
+
+.left {
+    &-roulette {
+        &-big {
+            display: flex;
+            position: relative;  
+            transition: transform 0.7s ease; // Добавьте это свойство
+        }
+
+        &-small {
+            display: flex;
+            position: relative;
+            gap: 3%;
+            // right: calc(20.8% * 0);
+            transition: transform 0.7s ease; // Добавьте это свойство
+        }
+
+        &-item {
+            box-sizing: border-box;
+            &-big {
+                min-width: 100%;
+                transition: transform 0.5s ease;
+                img {
+                    border: none;
+                    border-radius: fluid(30, 6);
+                    width: 100%;
+                    height: 29vw;
+                    display: block;
+                    @include mobile {
+                        height: 51vw;
+                        border-radius: 3vw;
+                    }
+                }
+            }
+
+            &-small {
+                min-width: 17.6%;
+                transition: transform 0.5s ease;
+                img {
+                    border: none;
+                    border-radius: fluid(10,3);
+                    height: 5.2vw;
+                    width: 100%;
+                    @include mobile {
+                        height: 9vw;
+                        border-radius: 1vw;
+                    }
+                }
+                @include mobile {
+                    margin-bottom: 3.9vw;
+                }
+            }
+        }
+
+
+    }
+
+    &-mini-info {
+        display: flex;
+        gap: fluid(70,30);
+        font-size: fluid(16, 5);
+        font-weight: 500;
+        margin-bottom: fluid(30, 1);
+        @include mobile {
+            font-size:3.2vw;
+            margin-bottom: 3.9vw;
+        }
+        &-left{
+            display: flex;
+            gap: fluid(20, 5);
+            align-items: center;
+            
+            img {
+                height: fluid(35,13);
+                width: fluid(35,13);
+                @include mobile {
+                    height: 5.6vw;
+                    width: auto;
+                }
+            }
+        }
+
+        &-right{
+            display: flex;
+            gap: fluid(20, 5);
+            align-items: center;
+            img {
+                height: fluid(35,12);
+                width: fluid(35,12);
+                @include mobile {
+                    height: 4.9vw;
+                    width: auto;
+                }
+            }
+        }
+    }
+
+    &-about-object {
+        display: flex;
+        flex-direction: column;
+        gap: fluid(30, 2);
+        @include mobile {
+            gap: 4vw;           
+        }
+        &-description, &-about{
+            color: #788095;
+            font-weight: 500;
+            font-size: fluid(20, 3);
+            @include mobile {
+                font-size: 3.8vw;       
+            }
+        }
+        &-text {
+            font-weight: 600;
+            font-size: fluid(24, 4);
+            @include mobile {
+                font-size: 4.9vw;       
+            }
+        }
+    }
+}
+
+.right {
+    &-top {
+        &-win {
+            padding-inline: fluid(40, 15);
+            padding-block: fluid(30, 15);
+            border: none;
+            border-radius: fluid(30, 10);
+            background-color: var(--color-gray-80);
+            display: flex;
+            flex-direction: column;
+            gap: fluid(40, 5);
+            @include mobile {
+                padding: 5vw;   
+                gap: 5vw;    
+            }
+            &-price {
+                text-align: center;
+                font-weight: 600;
+                font-size: fluid(48, 7);
+                @include mobile {
+                    font-size: 6.7vw;
+                }
+            }
+
+            &-items {
+                display: flex;
+                flex-direction: column;
+                gap: fluid(25, 1);
+                @include mobile {
+                    gap: 2vw;
+                }
+            }
+
+            &-number {
+                text-align: center;
+                font-weight: 500;
+                font-size: fluid(30, 4);
+                @include mobile {
+                    font-size:4.6vw;
+                }
+            }
+        }
+    }
+
+    &-bottom {
+        &-win {
+            padding-inline: fluid(40, 15);
+            padding-block: fluid(30, 15);
+            border: none;
+            border-radius: fluid(20, 15);
+            background-color: var(--color-gray-80);
+            display: flex;
+            flex-direction: column;
+            gap: fluid(30, 5);
+            @include mobile {
+                padding: 5vw;
+                gap: 5vw;
+            }
+        }
+    }
+}
+
+.case{
+    &-item {
+        display: flex;
+        justify-content: space-between;
+        font-weight: 500;
+        font-size: fluid(18, 2);
+        @include mobile {
+            font-size: 2.9vw;           
+        }
+    }
+
+    &-persons {
+        display: flex;
+        gap: fluid(40,6);
+        align-items:center ;
+        @include mobile {
+            gap: 5vw;
+        }
+        &-img {
+            width: fluid(70, 10);
+            height: fluid(70, 10);
+            border: none;
+            border-radius: 50%;
+            background-color: var(--color-gray-60);
+            @include mobile {
+                width: 13vw;
+                height: 13vw;       
+            }
+        }
+        &-text {
+            font-weight: 500;
+            font-size: fluid(20, 3);
+            @include mobile {
+                font-size: 4.4vw;       
+            }
+            &-name {
+                margin-bottom: 2px;
+            }
+            &-role {
+                font-size: fluid(18, 2);
+                @include mobile {
+                    font-size: 3.3vw;
+                }
+            }
+        }
+    }
+}
+
+.write-to-spec{
+    &-link {
+        display: flex;
+        justify-content: space-between;
+        width: fit-content;
+        gap: fluid(20,1);
+        justify-content: center;
+        align-items: center;
+        padding-block: fluid(23, 1);
+        padding-inline: fluid(30, 1);
+        background-color: #12c868;
+        border: none;
+        border-radius: fluid(50, 20);
+        text-transform: lowercase;
+        width: 100%;
+        &:hover {
+            background-color: var(--color-blue-dark);
+        }
+        @include mobile {
+            padding-inline: fluid(90,20) fluid(50, 10);
+            padding-block: fluid(20, 15);
+            border-radius: fluid(130,50);
+            gap: fluid(40, 20);
+        }
+        &-text {
+            color: white;
+            font-weight: 500;
+            font-size: fluid(18, 1);
+            @include mobile {
+                font-size: 3.9vw;
+            }
+        }
+    }
+    &-logo {
+    opacity: 1 !important;
+    width: fluid(40, 4);
+    height: auto;
+    @include mobile {
+        width: 7.8vw;
+        height: auto;
+    }
+    }
+}
+  .path-fill {
+    fill: var(--color-white) !important; 
+  }

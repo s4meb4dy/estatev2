@@ -1,0 +1,17 @@
+.serviceMain {
+    @include mobile {
+        margin-top: fluid(300, 100);
+    }
+}
+.Services-header-text {
+    font-weight: 400;
+    font-size: fluid(50,5);
+    padding-inline: fluid(100, 30);
+    padding-top: 3vw;
+    @include mobile {
+        font-size: fluid(50,22);
+    }
+    span {
+      font-weight: 600;
+    }
+}

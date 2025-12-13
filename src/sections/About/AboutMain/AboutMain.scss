@@ -1,0 +1,77 @@
+.about {
+    padding-inline: 10vw;
+    padding-top: 3vw;
+    display: flex;
+    flex-direction: column;
+    gap: fluid(50, 10);
+    @include mobile {
+        margin-top: fluid(300, 120);
+        gap: 7.8vw;
+    }
+    
+    &-text {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: fluid(30, 5);
+        font-size: fluid(25, 4);
+        &-span {
+            font-weight: 600;
+        }
+        @include mobile {
+            font-size: 2.6vw;
+            gap: 3.9vw;
+        }
+    }
+
+    &-numbers {
+        display: flex;
+        flex-direction: column;
+        gap: fluid(50, 1);
+        @include mobile {
+            gap: 3.9vw;
+        }
+    }
+}
+.numbers {
+
+    &-header {
+        font-weight: 500;
+        font-size: fluid(60, 10);
+        @include mobile {
+            font-size: 6.5vw;
+        }
+    }
+    &-all {
+        display: flex;
+        justify-content: space-around;
+        @include mobile {
+            column-gap: 13vw;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        &-header {
+            font-weight: 600;
+            font-size: fluid(80, 10);
+            color: black;
+            @include mobile {
+                font-size: 9.1vw;
+            }
+            &-other {
+                font-size: fluid(40, 10);
+                @include mobile {
+                    font-size: 4.5vw;
+                }
+            }
+        }
+    }
+    &-item {
+        text-align: center;
+        font-size: fluid(20, 5);
+        color:#a5adb2;
+        @include mobile {
+            font-size: 2.6vw;
+        }
+    }
+    
+}

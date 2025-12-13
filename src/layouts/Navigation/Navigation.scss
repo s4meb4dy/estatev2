@@ -1,0 +1,97 @@
+.navbar {
+    display: flex;
+    position: sticky;
+    top: 10px;
+    justify-content: center;
+    width: 100%;
+    z-index: 100;
+    &__house-button {
+        width: 1.5em;
+        height: 1.5em;
+    }
+    &__overlay-menu-dialog {
+        position: fixed;
+        inset: 0;
+        height: 100%;
+        width: 100%;
+        padding: 20px;
+        background-color: var(--color-white);
+        border: none;
+        justify-content: center;
+        align-items: center;
+        transition-duration: var(--transition-duration);
+        transition-behavior: allow-discrete;
+
+        @include mobile-above {
+            display: contents;            
+        }
+
+        &[open] {
+            display: flex;
+            z-index: 10;
+            @starting-style {
+                opacity: 0;
+                translate: 50%;
+            }
+
+        }
+
+        &:not([open]) {
+            opacity: 0;
+            translate: 50%;
+        }
+    }
+}
+.nav-list {
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    padding-block: fluid(20, 10);
+    padding-inline: fluid(40, 20);
+    gap: fluid(40, 15);
+    font-family: var(--font-family-base);
+    font-weight: 500;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px 0px #00000020;
+    background-color:var(--color-white);
+
+    @include mobile {
+        flex-direction: column;
+        gap: fluid(30, 20);
+        padding-block: fluid(50, 30);
+        padding-inline: fluid(40, 20);
+        border-radius: 20px;
+        
+    }
+}
+
+a {
+    // display: flex;
+    // align-items: center;
+    text-decoration: none;
+    font-size: fluid(15,8);
+    text-transform: uppercase;
+    @include mobile {
+        font-size: fluid(30, 15);
+    }
+    & svg {
+        opacity: 0.5;
+        display: flex;
+        align-items: center;
+    }
+    
+    &:hover {
+        color: var(--color-blue-dark);
+    }
+}
+.nothing-vertical {
+    content: "";
+    width: 1px;
+    height: 220%;
+    background-color: #f5f5f5;
+    @include mobile {
+        height: 1px;
+        width: 120%;
+    }
+}

@@ -1,0 +1,210 @@
+.contacts {
+    padding-inline: 10vw;
+    padding-top: 3vw;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 500;
+    @include mobile {
+        margin-top: fluid(300, 120);
+        flex-direction: column;
+        gap: fluid(50, 20);
+    }
+
+    &-left {
+        display: flex;
+        flex-direction: column;
+        gap: fluid(40, 3);
+        @include mobile{
+            width: 100%;
+            gap: 5vw;
+        }
+    }
+    &-adress {
+        font-size: fluid(20, 5);
+        @include mobile{
+            font-size: 3.9vw;   
+        }
+        &-full {
+            font-size: fluid(13, 3);
+            color: #a5adb2;
+            @include mobile{
+            font-size: 2.6vw;
+            }
+        }
+    }
+    &-worktime {
+        font-size: fluid(20, 5);
+        @include mobile{
+            font-size: 3.9vw;   
+        }
+    }
+    &-number {
+        font-size: fluid(20, 5);
+        @include mobile{
+            font-size: 3.9vw;   
+        }
+        &-link {
+            font-weight: 600;
+            font-size: fluid(25,7);
+            @include mobile{
+                font-size: 4.5vw;   
+            }
+        }
+    }
+    &-social {
+        display: flex;
+        flex-direction: column;
+        gap: fluid(10, 5);
+        font-size: fluid(20, 5);
+        @include mobile{
+            font-size: 3.9vw;   
+        }
+    }
+    &-map {
+        &-link {
+            height: 27vw;
+            width: 100%;
+            @include mobile{
+                width: 100%;
+                height: auto;
+            }
+            img {
+                border: none;
+                border-radius: fluid(50, 7);
+                @include mobile{
+                    border-radius: 6.5vw;  
+                }
+            }
+        }
+    }
+    &-right {
+        background-color: var(--color-blue-dark);
+        padding: fluid(40, 15);
+        border: none;
+        border-radius: fluid(50, 7);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 25vw;
+        gap: 2vw;
+        @include mobile{
+            gap: 7.8vw;
+            padding: 6.5vw;
+            border-radius: 6.5vw;
+            width: 100%;  
+        }
+    }
+    &-textus {
+        font-size: fluid(25, 6);
+        color: white;
+        @include mobile{
+            font-size: 3.9vw;   
+        }
+    }
+    &-form {
+        &-name, &-tel, &-mail, &-text {
+            color: white;
+            font-size: fluid(13, 4);
+            @include mobile{
+                font-size: 2.6vw;   
+            }
+            &-input {
+                padding: fluid(15, 3) fluid(30, 6) !important;
+                margin: fluid(8, 1) 0 !important;
+                font-size:fluid(15, 3) !important;
+                @include mobile{
+                    padding: 2vw 3.9vw !important;
+                    margin: 1vw 0 !important;
+                    font-size: 3.25vw !important;
+                    border-radius: 5.2vw !important;
+                }
+            }
+        }
+        &-text-input {
+            height: fluid(100, 30);
+            border-radius: fluid(30,5);
+            @include mobile {
+                height: 25vw;
+                border-radius: 3vw;
+            }
+            
+        }
+
+        &-but {
+            font-size: fluid(15, 3);
+            width: 100%;
+            padding-block: fluid(15, 3);
+            border: 1px solid white !important;
+            border-radius: fluid(40, 10);
+            color: white !important;
+            background-color: transparent;
+            margin-top: fluid(8, 1);
+            @include mobile {
+                padding-block: 2vw;
+                font-size: 3.25vw;
+                border-radius: 5.2vw;
+                margin-top: 1.3vw;
+            }
+        }
+    }
+}
+.social {
+    &-list {
+        display: flex;
+        gap: fluid(30, 5);
+        @include mobile {
+           gap: 3.9vw;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//logo whatsApp
+.whatsapp {
+    &-link {
+        opacity: 1 !important;
+        width: fluid(50,10);
+        height: auto;
+        @include mobile {
+            width: 8vw;
+            height: auto;
+        }
+    }
+    &-path {
+        fill: #12c868 !important; 
+    }
+}
+.telegram {
+    width: fluid(50,10);
+    height: auto;
+    @include mobile {
+        width: 8vw;
+        height: auto;
+    }
+}
+.vk {
+    width: fluid(50,10);
+    height: auto; 
+    @include mobile {
+        width: 8vw;
+        height: auto;
+    }
+    img {
+        @include mobile {
+            width: 8vw;
+            height: auto;
+        }
+    }
+}

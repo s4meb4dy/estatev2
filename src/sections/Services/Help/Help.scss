@@ -1,0 +1,169 @@
+.right {
+    &-link {
+        width: 100% !important;
+        display: flex;
+        justify-content: space-between;
+        width: fit-content;
+        align-items: center;
+        padding-block: fluid(25,1)!important;
+        padding-inline: fluid(40, 15) fluid(20, 10) !important;
+        border: none;
+        border-radius: fluid(50,20) !important;
+        background-color: #12c868;
+        text-transform: lowercase;
+        &:hover {
+            background-color: var(--color-blue-dark);
+        }
+        @include mobile {
+            padding-inline: 8vw 5vw !important;
+            padding-block: 3vw !important;
+            border-radius: 50px !important;
+            gap: fluid(100, 20);
+        }
+        &-text {
+            color: white;
+            font-size: fluid(23, 5) !important;
+            @include mobile {
+                font-size: fluid(70, 15) !important;
+            }
+        }
+    }
+}
+
+.right-whatsapp-logo {
+    opacity: 1 !important;
+    width: fluid(40,15);
+    height: auto;
+    @include mobile {
+        width: 8vw;
+        height: auto;
+    }
+}
+.path-fill {
+    fill: var(--color-white) !important; 
+}
+
+.help {
+    display: flex;
+    flex-direction: column;
+    padding-inline: fluid(100, 30);
+    padding-block: 30px 50px;
+    gap: 2vw;
+
+    &-main-text {
+        font-size: fluid(50,5);
+        @include mobile {
+            font-size: fluid(50,22);
+        }
+    }
+
+    &-main-sec {
+        display: flex;
+        justify-content: space-between;
+        background-color: var(--color-gray-80);
+        border: none;
+        border-radius: 50px;
+        padding: 4vw;
+        @include mobile {
+            flex-direction: column;
+            gap: 10vw;
+            border-radius: 7vw;
+        }
+    }
+
+    &-sec-left {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        @include mobile {
+            width: 100%;
+        }
+    }
+
+    &-sec-right {
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+        @include mobile {
+            width: 100%;
+        }
+    }
+}
+
+.left {
+    &-header {
+        font-size: fluid(50,17);
+        line-height: fluid(60,30);
+        margin-bottom: 4vw;
+        @include mobile {
+            font-size: fluid(150,30);
+            line-height: fluid(180,40);
+        }
+    }
+
+    &-list {
+        list-style-type: disc;
+        list-style-position: inside;
+        font-size: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        &-header {
+            font-size: fluid(30,15);
+            margin-bottom: 20px;
+            @include mobile {
+                font-size: fluid(80,20);
+            }
+        }
+        &-item {
+            font-size: fluid(20,10);
+            @include mobile {
+                font-size: fluid(60,15);
+            }
+        }
+    }
+}
+
+.right {
+    &-header {
+        font-size: fluid(30,10);
+        text-align: center;
+        margin-bottom: fluid(80, 20);
+        @include mobile {
+            font-size: fluid(100, 20);
+        }
+    }
+
+    &-button-send {
+        padding: fluid(25,1) fluid(40,1) !important;
+        border-radius: fluid(50,20) !important;
+        margin-block: 0 fluid(20, 10) !important;
+        span {
+            font-size: fluid(25, 10);
+            @include mobile {
+                font-size: fluid(70, 17);
+            }
+        }
+        @include mobile {
+            padding: 4vw !important;
+            border-radius: 50px !important;
+        }
+    }
+}
+
+#HelpPhone {
+    width: 100%;
+    padding: fluid(25,1) fluid(40,1);
+    margin-block: 0 fluid(20, 10);
+    display: inline-block;
+    border: none;
+    border-radius: fluid(50,20);
+    box-sizing: border-box;
+    font-size: fluid(20, 10);
+    @include mobile {
+        padding: 4vw;
+        font-size: fluid(60, 15);
+        border-radius: 50px;
+    }
+}

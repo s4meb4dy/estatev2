@@ -1,0 +1,29 @@
+.reviews {
+    padding-inline: 10vw;
+    padding-top: 3vw;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    gap: 2vw;
+    font-weight: 600;
+    font-size: fluid(45,5);
+    @include mobile {
+        margin-top: fluid(300, 120);
+        flex-direction: column;
+        gap: fluid(50, 20);
+        font-size: 3.9vw;
+    }
+    &-slider {
+        display: flex;
+        @include mobile {
+            flex-direction: column;
+        }
+    }
+    &-slider {
+        &-item {
+            width: 100%;
+        }
+    }
+}
