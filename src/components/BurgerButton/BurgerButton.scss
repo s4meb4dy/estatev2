@@ -2,9 +2,9 @@
     @include flex-center(true);
     @include square(51px);
     padding: 0;
-    background-color: var(--color-white);
-    border: 0 solid black;
-    border-radius: 6px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: 10px;
 
     &.is-active {
         .burger-button__line {
@@ -25,7 +25,7 @@
     
     &__line {
         fill: none;
-        stroke: black;
+        stroke: var(--color-text);
         stroke-width: 6;
         stroke-linecap: round;
         stroke-dasharray: 60 207;

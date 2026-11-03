@@ -1,3 +1,4 @@
+import PropertyPhoto from '@/components/PropertyPhoto'
 import './SecondCurrentObject.scss'
 
 const SecondCurrentObject = () => {
@@ -33,11 +34,16 @@ const SecondCurrentObject = () => {
             <div className="case-inner">
                 <div className="case-left-wrapper">
                     <div className="case-left">
-                        <div classname="roulette-all">
+                        <div className="roulette-all">
                             <div className="left-roulette-big">
                                 {objectsCardsInfo.images.map((items, index) => (
-                                    <div className="left-roulette-item-big">
-                                        <img src={items} key={index} className="big-img-for-script" alt="/"/>
+                                    <div className="left-roulette-item-big" key={items}>
+                                        <PropertyPhoto
+                                            className="detail-photo"
+                                            src={items}
+                                            alt={`${objectsCardsInfo.title} — фото ${index + 1}`}
+                                            loading={index === 0 ? 'eager' : 'lazy'}
+                                        />
                                     </div>
                                 ))}
                             </div>
@@ -46,8 +52,14 @@ const SecondCurrentObject = () => {
 
                         <div className="left-roulette-small">
                             {objectsCardsInfo.images.map((items, index) => (
-                                <div className="left-roulette-item-small">
-                                    <img src={items} key={index} className="small-img-for-script" alt="/"/>
+                                <div className="left-roulette-item-small" key={items}>
+                                    <img
+                                        src={items}
+                                        className="small-img-for-script"
+                                        alt={`${objectsCardsInfo.title} — миниатюра ${index + 1}`}
+                                        loading="lazy"
+                                        decoding="async"
+                                    />
                                 </div>
                             ))}
                         </div>
@@ -79,8 +91,8 @@ const SecondCurrentObject = () => {
                         </div>
                     </div>
                     <div className="buttons">
-                        <button class="paginate left"><i></i><i></i></button>
-                        <button class="paginate right"><i></i><i></i></button>
+                        <button type="button" className="paginate left" aria-label="Предыдущее фото"><i></i><i></i></button>
+                        <button type="button" className="paginate right" aria-label="Следующее фото"><i></i><i></i></button>
                     </div>
                 </div>
 

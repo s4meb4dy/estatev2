@@ -3,6 +3,7 @@
     justify-content: space-between;
     padding-inline: fluid(100, 30);
     padding-block: 5vw;
+
     @include mobile {
         display: flex;
         flex-direction: column;
@@ -11,17 +12,20 @@
 }
 
 .left {
-    &-adv{
+    &-adv {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         width: 44%;
+
         &-item {
             height: 17vw;
+
             @include mobile {
                 height: 34vw;
             }
         }
+
         @include mobile {
             width: 100%;
             gap: 6vw;
@@ -33,24 +37,29 @@
     &-adv {
         width: 54%;
         height: 36vw;
+
         @include mobile {
             height: 58vw;
             width: 100%;
         }
+
         &-item {
             height: 100%;
         }
     }
 }
+
 .adv {
     &-item {
-        background-color: var(--color-gray-80);
-        padding: fluid(50, 1);
-        border: none;
-        border-radius: fluid(50,10);
+        background-color: var(--color-surface);
+        border: 1px solid var(--color-line);
+        padding: fluid(44, 18);
+        border-radius: 24px;
+        box-shadow: var(--shadow-card);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+
         @include mobile {
             border-radius: 4vw;
             height: 58vw;
@@ -59,42 +68,60 @@
     }
 
     &-header {
-        display: flex; // или inline-block
-        align-items: center; // выравниваем элементы по центру по вертикали
-        gap: 2vw;
-        font-size: fluid(20,5);
-        text-transform: lowercase;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-size: fluid(12, 10);
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--color-text-muted);
+
         &::before {
             content: "";
-            display: inline-block; // делаем псевдоэлемент встроенным
-            height: 1px; // высота полосы
-            width: 3vw; // ширина полосы
-            background-color: var(--color-gray-60);
+            display: inline-block;
+            height: 1px;
+            width: 28px;
+            background-color: var(--color-gold);
             vertical-align: middle;
+
             @include mobile {
                 width: 8vw;
             }
         }
+
         @include mobile {
             font-size: 2.5vw;
         }
     }
 
     &-text {
-        font-size: fluid(28,7);
+        font-family: var(--font-family-heading);
+        font-size: fluid(28, 18);
         font-weight: 500;
-        text-transform: uppercase;
+        line-height: 1.15;
+        letter-spacing: -0.01em;
+        color: var(--color-text);
+        text-transform: none;
         display: flex;
         flex-direction: column;
         gap: 2.5vw;
+
         @include mobile {
-            font-size: 4.5vw;
+            font-size: 4.2vw;
         }
     }
 
     &-show-text {
-        font-size: 3.5vw;
+        font-family: var(--font-family-base);
+        font-size: 14px;
         font-weight: 400;
-        text-transform: lowercase;
+        line-height: 1.5;
+        color: var(--color-text-muted);
+        text-transform: none;
+
+        @include mobile {
+            font-size: 3.2vw;
+        }
     }
 }

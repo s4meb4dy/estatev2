@@ -20,32 +20,46 @@
         }
     }
     &-adress {
-        font-size: fluid(20, 5);
+        font-family: var(--font-family-heading);
+        font-weight: 500;
+        line-height: 1.25;
+        letter-spacing: -0.01em;
+        color: var(--color-text);
+        font-size: fluid(30, 5);
         @include mobile{
             font-size: 3.9vw;   
         }
         &-full {
+            font-family: var(--font-family-base);
             font-size: fluid(13, 3);
-            color: #a5adb2;
+            line-height: 1.6;
+            color: var(--color-text-muted);
             @include mobile{
             font-size: 2.6vw;
             }
         }
     }
     &-worktime {
-        font-size: fluid(20, 5);
+        font-size: fluid(16, 5);
+        color: var(--color-text-muted);
         @include mobile{
             font-size: 3.9vw;   
         }
     }
     &-number {
-        font-size: fluid(20, 5);
+        font-size: fluid(16, 5);
+        color: var(--color-text-muted);
         @include mobile{
             font-size: 3.9vw;   
         }
         &-link {
-            font-weight: 600;
+            font-family: var(--font-family-heading);
+            font-weight: 500;
             font-size: fluid(25,7);
+            color: var(--color-text);
+            @include hover {
+                color: var(--color-gold-dark);
+            }
             @include mobile{
                 font-size: 4.5vw;   
             }
@@ -55,7 +69,8 @@
         display: flex;
         flex-direction: column;
         gap: fluid(10, 5);
-        font-size: fluid(20, 5);
+        font-size: fluid(16, 5);
+        color: var(--color-text-muted);
         @include mobile{
             font-size: 3.9vw;   
         }
@@ -70,7 +85,9 @@
             }
             img {
                 border: none;
-                border-radius: fluid(50, 7);
+                border-radius: fluid(18, 7);
+                outline: 1px solid var(--color-line);
+                outline-offset: -1px;
                 @include mobile{
                     border-radius: 6.5vw;  
                 }
@@ -78,10 +95,11 @@
         }
     }
     &-right {
-        background-color: var(--color-blue-dark);
+        background-color: var(--color-text);
         padding: fluid(40, 15);
         border: none;
-        border-radius: fluid(50, 7);
+        border-radius: fluid(20, 7);
+        box-shadow: var(--shadow-soft);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -95,7 +113,11 @@
         }
     }
     &-textus {
-        font-size: fluid(25, 6);
+        font-family: var(--font-family-heading);
+        font-weight: 500;
+        line-height: 1.15;
+        letter-spacing: -0.01em;
+        font-size: fluid(26, 6);
         color: white;
         @include mobile{
             font-size: 3.9vw;   
@@ -103,8 +125,9 @@
     }
     &-form {
         &-name, &-tel, &-mail, &-text {
-            color: white;
+            color: rgba(255, 255, 255, 0.72);
             font-size: fluid(13, 4);
+            letter-spacing: 0.02em;
             @include mobile{
                 font-size: 2.6vw;   
             }
@@ -131,18 +154,25 @@
         }
 
         &-but {
+            font-family: var(--font-family-base);
+            font-weight: 600;
             font-size: fluid(15, 3);
             width: 100%;
             padding-block: fluid(15, 3);
-            border: 1px solid white !important;
-            border-radius: fluid(40, 10);
+            border: 1px solid rgba(255, 255, 255, 0.6) !important;
+            border-radius: 999px;
             color: white !important;
             background-color: transparent;
             margin-top: fluid(8, 1);
+            cursor: pointer;
+            @include hover {
+                background-color: var(--color-white);
+                border-color: var(--color-white) !important;
+                color: var(--color-text) !important;
+            }
             @include mobile {
                 padding-block: 2vw;
                 font-size: 3.25vw;
-                border-radius: 5.2vw;
                 margin-top: 1.3vw;
             }
         }
@@ -183,7 +213,7 @@
         }
     }
     &-path {
-        fill: #12c868 !important; 
+        fill: var(--color-gold) !important; 
     }
 }
 .telegram {

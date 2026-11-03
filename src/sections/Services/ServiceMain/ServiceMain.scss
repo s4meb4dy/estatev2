@@ -4,14 +4,20 @@
     }
 }
 .Services-header-text {
-    font-weight: 400;
-    font-size: fluid(50,5);
+    font-family: var(--font-family-heading);
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    color: var(--color-text);
+    font-size: fluid(46,5);
     padding-inline: fluid(100, 30);
     padding-top: 3vw;
     @include mobile {
         font-size: fluid(50,22);
     }
     span {
-      font-weight: 600;
+      font-weight: 500;
+      font-style: italic;
+      color: var(--color-blue);
     }
 }

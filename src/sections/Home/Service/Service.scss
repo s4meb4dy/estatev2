@@ -1,17 +1,16 @@
 .services {
     padding-inline: fluid(100, 30);
     padding-block: 2vw;
-    
+
     &-container {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(22vw, 1fr));
         gap: 4vw;
-        // max-width: 85vw;
         width: 100%;
         margin: 0;
+
         @include mobile {
             grid-template-columns: repeat(auto-fit, minmax(37vw, 1fr));
-
         }
     }
 }
@@ -22,83 +21,118 @@
         flex-direction: column;
         justify-content: space-between;
         gap: 2.5vw;
-        background-color: var(--color-gray-80);
-        border: none;
-        border-radius: fluid(50,10);
-        padding: 3vw;
+        background-color: var(--color-surface);
+        border: 1px solid var(--color-line);
+        border-radius: 22px;
+        padding: 2.6vw;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         height: fluid(540, 100);
-        &:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        @include hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-soft);
         }
+
         @include mobile {
             padding: 4vw;
             border-radius: 5vw;
             gap: 2.6vw;
             height: 53vw;
         }
-        
     }
+
     &-take {
-        background-color: var(--color-blue-dark);
-        color: white;
+        background-color: var(--color-text);
+        border-color: var(--color-text);
+        color: var(--color-white);
     }
+
     &-link {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         gap: 2.5vw;
         height: 100%;
-        &-take:hover {
-            color: white;
+
+        &-take {
+            @include hover {
+                color: var(--color-white);
+            }
         }
+
         @include mobile {
             gap: 6.5vw;
         }
     }
+
     &-title {
-        font-size: fluid(34,10);
+        font-family: var(--font-family-heading);
+        font-size: fluid(30, 14);
         font-weight: 500;
+        line-height: 1.12;
+        letter-spacing: -0.01em;
+        color: var(--color-text);
+
         @include mobile {
-            font-size: 3.4vw;
+            font-size: 3vw;
         }
     }
+
+    &-take &-title {
+        color: var(--color-white);
+    }
+
     &-description {
-        font-size: fluid(23,1);
-        text-transform: lowercase;
+        font-size: fluid(15, 10);
+        line-height: 1.5;
+        color: var(--color-text-muted);
+
         @include mobile {
-            font-size: 2.3vw;
+            font-size: 2.2vw;
         }
     }
+
+    &-take &-description {
+        color: rgba(255, 255, 255, 0.72);
+    }
+
     &-price-list {
-        font-size: fluid(27,1);
+        font-size: fluid(27, 14);
     }
+
     &-label-take {
-        color: white;
-        text-transform: lowercase;
-        font-size: fluid(23, 1);
+        color: rgba(255, 255, 255, 0.72);
+        font-size: fluid(13, 10);
     }
+
     &-button {
-        font-size: fluid(20,1);
+        font-family: var(--font-family-base);
+        font-size: fluid(15, 11);
+        font-weight: 600;
         border: none;
-        border-radius: fluid(50,30);
-        padding: fluid(18,10);
+        border-radius: 999px;
+        padding: fluid(16, 10);
         background-color: var(--color-blue-dark);
         color: white;
-        &:hover {
-            background-color: #496dd1;
-            border: none;
+
+        @include hover {
+            background-color: var(--color-text);
         }
+
         &-take {
-            border-radius: fluid(50,30) !important;
-            padding: fluid(18,10) !important;
+            border-radius: 999px !important;
+            padding: fluid(16, 10) !important;
             margin: 0 !important;
-            outline: 1px solid white;
-            &:hover {
-                outline: none;
+            background-color: transparent;
+            outline: 1px solid rgba(255, 255, 255, 0.6);
+
+            @include hover {
+                background-color: var(--color-white);
+                color: var(--color-text);
+                outline-color: var(--color-white);
             }
         }
+
         @include mobile {
             font-size: 2.2vw;
             padding: 2vw;
@@ -111,11 +145,14 @@ input[type=tel],
 input[type=mail],
 textarea {
     width: 100%;
-    padding: fluid(15,10) fluid(30,15);
+    padding: fluid(15, 10) fluid(30, 15);
     margin: 8px 0;
     display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: fluid(30,20);
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    background-color: var(--color-surface);
+    color: var(--color-text);
     box-sizing: border-box;
-    font-size: fluid(20, 1); /* Учитывать padding и border в ширине */
+    font-family: var(--font-family-base);
+    font-size: fluid(15, 12);
 }

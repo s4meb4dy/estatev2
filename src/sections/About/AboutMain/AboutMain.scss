@@ -14,9 +14,12 @@
         display: flex;
         flex-direction: column;
         gap: fluid(30, 5);
-        font-size: fluid(25, 4);
+        font-size: fluid(19, 4);
+        line-height: 1.75;
+        color: var(--color-text-muted);
         &-span {
             font-weight: 600;
+            color: var(--color-text);
         }
         @include mobile {
             font-size: 2.6vw;
@@ -36,8 +39,12 @@
 .numbers {
 
     &-header {
+        font-family: var(--font-family-heading);
         font-weight: 500;
-        font-size: fluid(60, 10);
+        line-height: 1.12;
+        letter-spacing: -0.015em;
+        font-size: fluid(48, 10);
+        color: var(--color-text);
         @include mobile {
             font-size: 6.5vw;
         }
@@ -51,14 +58,17 @@
             flex-wrap: wrap;
         }
         &-header {
+            font-family: var(--font-family-heading);
             font-weight: 600;
-            font-size: fluid(80, 10);
-            color: black;
+            font-size: fluid(64, 10);
+            letter-spacing: -0.02em;
+            color: var(--color-text);
             @include mobile {
                 font-size: 9.1vw;
             }
             &-other {
-                font-size: fluid(40, 10);
+                color: var(--color-gold);
+                font-size: fluid(34, 10);
                 @include mobile {
                     font-size: 4.5vw;
                 }
@@ -67,8 +77,9 @@
     }
     &-item {
         text-align: center;
-        font-size: fluid(20, 5);
-        color:#a5adb2;
+        font-size: fluid(16, 5);
+        line-height: 1.5;
+        color: var(--color-text-muted);
         @include mobile {
             font-size: 2.6vw;
         }

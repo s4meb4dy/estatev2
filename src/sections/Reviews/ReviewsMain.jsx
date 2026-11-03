@@ -27,12 +27,12 @@ const ReviewsMain = () => {
             <div className="reviews-slider">
                 <div className="slider-sec">
                     {reviewsImages.slice(0,8).map((item) => (
-                        <img src={item} alt="" className="slider-item"/>
+                        <img src={item} alt="Отзыв клиента" className="slider-item" key={item}/>
                     ))}
                 </div>
                 <div className="slider-sec">
                     {reviewsImages.slice(8, 15).map((item) => (
-                        <img src={item} alt="" className="slider-item"/>
+                        <img src={item} alt="Отзыв клиента" className="slider-item" key={item}/>
                     ))}
                 </div>
             </div>

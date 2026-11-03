@@ -3,7 +3,6 @@
     padding-top: 3vw;
     display: flex;
     justify-content: space-between;
-    font-weight: 500;
     display: flex;
     flex-direction: column;
     gap: 2vw;
@@ -15,6 +14,17 @@
         gap: fluid(50, 20);
         font-size: 3.9vw;
     }
+    &-header {
+        font-family: var(--font-family-heading);
+        font-weight: 500;
+        line-height: 1.12;
+        letter-spacing: -0.015em;
+        color: var(--color-text);
+        font-size: fluid(44, 5);
+        @include mobile {
+            font-size: 5.2vw;
+        }
+    }
     &-slider {
         display: flex;
         @include mobile {
@@ -24,6 +34,10 @@
     &-slider {
         &-item {
             width: 100%;
+            border-radius: fluid(10, 4);
+            outline: 1px solid var(--color-line);
+            outline-offset: -1px;
+            box-shadow: var(--shadow-card);
         }
     }
 }

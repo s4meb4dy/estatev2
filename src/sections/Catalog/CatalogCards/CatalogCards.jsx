@@ -65,7 +65,7 @@ const CatalogCards = () => {
             className="catalog-cards-sec"
         >
             <p className="catalog-header">
-                Каталог недвижимости агентства недвижимости <span>Город</span>
+                Каталог недвижимости агентства <span>«Город»</span>
             </p>
             {catalogCardsInfo.map((item, index) => (
                 <Card {...item} key = {index} />

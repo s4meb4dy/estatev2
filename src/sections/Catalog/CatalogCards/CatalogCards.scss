@@ -1,14 +1,21 @@
-
 .catalog-header {
     padding-inline: 10vw;
     padding-top: 3vw;
-    font-weight: 600;
-    font-size: fluid(45,5);
+    font-family: var(--font-family-heading);
+    font-weight: 500;
+    font-size: fluid(46, 22);
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    color: var(--color-text);
+
     span {
-      font-weight: 400;
+        font-weight: 500;
+        font-style: italic;
+        color: var(--color-blue);
     }
+
     @include mobile {
-      margin-top: fluid(300, 120);
-      font-size: 3.9vw;
+        margin-top: fluid(300, 120);
+        font-size: 5.2vw;
     }
-  }
+}

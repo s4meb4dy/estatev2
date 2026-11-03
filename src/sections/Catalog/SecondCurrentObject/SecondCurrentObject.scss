@@ -18,8 +18,6 @@ $angleActive: 25deg;
     position: relative;
 }
 
-
-
 .paginate {
     position: relative;
     appearance: none;
@@ -43,7 +41,7 @@ $angleActive: 25deg;
     width: $size;
     height: $thickness;
     border-radius: calc($thickness / 2);
-    background: var(--color-blue-dark);
+    background: var(--color-gold);
 
     transition: all 0.15s ease;
     @include mobile {
@@ -135,7 +133,10 @@ $angleActive: 25deg;
     }
 }
 .object-header {
+    font-family: var(--font-family-heading);
     font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: -0.015em;
     font-size: fluid(40,15);
     @include mobile {
         font-size: 4.2vw;
@@ -201,14 +202,14 @@ $angleActive: 25deg;
             &-big {
                 min-width: 100%;
                 transition: transform 0.5s ease;
-                img {
-                    border: none;
-                    border-radius: fluid(30, 6);
+
+                .detail-photo {
                     width: 100%;
-                    height: 29vw;
-                    display: block;
+                    aspect-ratio: 3 / 2;
+                    border-radius: fluid(18, 6);
+                    box-shadow: var(--shadow-card);
+
                     @include mobile {
-                        height: 51vw;
                         border-radius: 3vw;
                     }
                 }
@@ -218,12 +219,17 @@ $angleActive: 25deg;
                 min-width: 17.6%;
                 transition: transform 0.5s ease;
                 img {
-                    border: none;
-                    border-radius: fluid(10,3);
-                    height: 5.2vw;
+                    display: block;
                     width: 100%;
+                    aspect-ratio: 3 / 2;
+                    height: auto;
+                    object-fit: cover;
+                    object-position: center;
+                    border: none;
+                    border-radius: fluid(8, 3);
+                    outline: 1px solid var(--color-line);
+                    outline-offset: -1px;
                     @include mobile {
-                        height: 9vw;
                         border-radius: 1vw;
                     }
                 }
@@ -241,6 +247,8 @@ $angleActive: 25deg;
         gap: fluid(70,30);
         font-size: fluid(16, 5);
         font-weight: 500;
+        letter-spacing: 0.01em;
+        color: var(--color-text-muted);
         margin-bottom: fluid(30, 1);
         @include mobile {
             font-size:3.2vw;
@@ -284,15 +292,19 @@ $angleActive: 25deg;
             gap: 4vw;           
         }
         &-description, &-about{
-            color: #788095;
+            color: var(--color-text-muted);
             font-weight: 500;
-            font-size: fluid(20, 3);
+            font-size: fluid(16, 3);
+            line-height: 1.65;
             @include mobile {
                 font-size: 3.8vw;       
             }
         }
         &-text {
-            font-weight: 600;
+            font-family: var(--font-family-heading);
+            font-weight: 500;
+            line-height: 1.15;
+            letter-spacing: -0.01em;
             font-size: fluid(24, 4);
             @include mobile {
                 font-size: 4.9vw;       
@@ -306,9 +318,10 @@ $angleActive: 25deg;
         &-win {
             padding-inline: fluid(40, 15);
             padding-block: fluid(30, 15);
-            border: none;
-            border-radius: fluid(30, 10);
-            background-color: var(--color-gray-80);
+            border: 1px solid var(--color-line);
+            border-radius: fluid(20, 10);
+            background-color: var(--color-surface);
+            box-shadow: var(--shadow-card);
             display: flex;
             flex-direction: column;
             gap: fluid(40, 5);
@@ -318,7 +331,9 @@ $angleActive: 25deg;
             }
             &-price {
                 text-align: center;
+                font-family: var(--font-family-heading);
                 font-weight: 600;
+                letter-spacing: -0.01em;
                 font-size: fluid(48, 7);
                 @include mobile {
                     font-size: 6.7vw;
@@ -349,9 +364,10 @@ $angleActive: 25deg;
         &-win {
             padding-inline: fluid(40, 15);
             padding-block: fluid(30, 15);
-            border: none;
+            border: 1px solid var(--color-line);
             border-radius: fluid(20, 15);
-            background-color: var(--color-gray-80);
+            background-color: var(--color-surface);
+            box-shadow: var(--shadow-card);
             display: flex;
             flex-direction: column;
             gap: fluid(30, 5);
@@ -367,10 +383,22 @@ $angleActive: 25deg;
     &-item {
         display: flex;
         justify-content: space-between;
+        gap: 12px;
         font-weight: 500;
-        font-size: fluid(18, 2);
+        font-size: fluid(16, 2);
+        color: var(--color-text-muted);
         @include mobile {
             font-size: 2.9vw;           
+        }
+
+        &-key {
+            color: var(--color-text-muted);
+        }
+
+        &-value {
+            color: var(--color-text);
+            font-weight: 600;
+            text-align: right;
         }
     }
 
@@ -384,9 +412,10 @@ $angleActive: 25deg;
         &-img {
             width: fluid(70, 10);
             height: fluid(70, 10);
-            border: none;
+            border: 1px solid var(--color-line);
             border-radius: 50%;
-            background-color: var(--color-gray-60);
+            background-color: var(--color-surface-soft);
+            overflow: hidden;
             @include mobile {
                 width: 13vw;
                 height: 13vw;       
@@ -400,9 +429,11 @@ $angleActive: 25deg;
             }
             &-name {
                 margin-bottom: 2px;
+                font-weight: 600;
             }
             &-role {
-                font-size: fluid(18, 2);
+                color: var(--color-text-muted);
+                font-size: fluid(15, 2);
                 @include mobile {
                     font-size: 3.3vw;
                 }
@@ -421,13 +452,14 @@ $angleActive: 25deg;
         align-items: center;
         padding-block: fluid(23, 1);
         padding-inline: fluid(30, 1);
-        background-color: #12c868;
+        background-color: var(--color-text);
         border: none;
-        border-radius: fluid(50, 20);
+        border-radius: 999px;
         text-transform: lowercase;
         width: 100%;
+        box-shadow: 0 12px 26px rgba(28, 36, 48, 0.16);
         &:hover {
-            background-color: var(--color-blue-dark);
+            background-color: var(--color-blue);
         }
         @include mobile {
             padding-inline: fluid(90,20) fluid(50, 10);

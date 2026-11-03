@@ -1,38 +1,47 @@
 :root {
     --color-white: #FFFFFF;
-    --color-black: #000000;
+    --color-black: #1C2430;
 
-    --color-red-45: #E50000;
-    --color-red-50: #FF0000;
-    --color-red-55: #FF1919;
-    --color-red-60: #FF3333;
-    --color-red-80: #FF9999;
-    --color-red-90: #FFCCCC;
-    --color-red-95: #FFE5E5;
-    --color-red-99: #FFFAFA;
+    --color-text: #1C2430;
+    --color-text-muted: #5B6068;
+    --color-bg: #F7F3EC;
+    --color-surface: #FFFFFF;
+    --color-surface-soft: #EFE8DC;
+    --color-line: #E4DCCF;
+    --color-gold: #B99A5B;
+    --color-gold-dark: #9A7B3F;
 
-    --color-black-06: #0F0F0F;
-    --color-black-08: #141414;
-    --color-black-10: #1A1A1A;
-    --color-black-12: #1F1F1F;
-    --color-black-15: #262626;
-    --color-black-20: #333333;
-    --color-black-25: #404040;
-    --color-black-30: #4C4C4C;
-    
-    --color-gray-60: #999999;
-    --color-gray-65: #A6A6A6;
-    --color-gray-70: #B3B3B3;
-    --color-gray-75: #BFBFBF;
-    --color-gray-80: #E4E4E7;
-    --color-gray-85: #F1F1F3;
-    --color-gray-90: #F7F7F8;
-    --color-gray-95: #FCFCFD;
+    --color-red-45: #9A7B3F;
+    --color-red-50: #B99A5B;
+    --color-red-55: #C8AB72;
+    --color-red-60: #D6BC8A;
+    --color-red-80: #E7D8BD;
+    --color-red-90: #F0E7D6;
+    --color-red-95: #F7F1E5;
+    --color-red-99: #FCFAF6;
 
-    --color-blue: #004376;
-    --color-blue-dark: #6480D0;
+    --color-black-06: #14181E;
+    --color-black-08: #171C23;
+    --color-black-10: #1C2430;
+    --color-black-12: #242D3A;
+    --color-black-15: #2E3847;
+    --color-black-20: #3A4454;
+    --color-black-25: #485262;
+    --color-black-30: #5B6472;
 
-    --border: var(var(--border-width-s)) solid var(var(--color-black-15));
+    --color-gray-60: #7A7A74;
+    --color-gray-65: #8A8A82;
+    --color-gray-70: #A8A49B;
+    --color-gray-75: #C4BFB5;
+    --color-gray-80: #E8E1D6;
+    --color-gray-85: #F1ECE3;
+    --color-gray-90: #F7F3EC;
+    --color-gray-95: #FCFAF6;
+
+    --color-blue: #3F568F;
+    --color-blue-dark: #5A74B8;
+
+    --border: var(--border-width-s) solid var(--color-line);
 
     --border-width-l: 4px;
     --border-width-m: 3px;
@@ -46,6 +55,10 @@
     --border-radius-xxxs: 4px;
 
     --font-family-base: 'Manrope', sans-serif;
+    --font-family-heading: 'Lora', Georgia, 'Times New Roman', serif;
+
+    --shadow-soft: 0 18px 50px rgba(28, 36, 48, 0.08);
+    --shadow-card: 0 12px 30px rgba(28, 36, 48, 0.06);
 
     --container-width: #{fliud-to-laptop(
         $container-desktop-width, 

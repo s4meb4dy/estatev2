@@ -8,11 +8,12 @@
         padding-block: fluid(25,1)!important;
         padding-inline: fluid(40, 15) fluid(20, 10) !important;
         border: none;
-        border-radius: fluid(50,20) !important;
-        background-color: #12c868;
+        border-radius: 999px !important;
+        background-color: var(--color-text);
+        box-shadow: 0 12px 26px rgba(28, 36, 48, 0.16);
         text-transform: lowercase;
         &:hover {
-            background-color: var(--color-blue-dark);
+            background-color: var(--color-blue);
         }
         @include mobile {
             padding-inline: 8vw 5vw !important;
@@ -51,7 +52,12 @@
     gap: 2vw;
 
     &-main-text {
-        font-size: fluid(50,5);
+        font-family: var(--font-family-heading);
+        font-weight: 500;
+        line-height: 1.12;
+        letter-spacing: -0.015em;
+        color: var(--color-text);
+        font-size: fluid(46,5);
         @include mobile {
             font-size: fluid(50,22);
         }
@@ -60,9 +66,10 @@
     &-main-sec {
         display: flex;
         justify-content: space-between;
-        background-color: var(--color-gray-80);
-        border: none;
-        border-radius: 50px;
+        background-color: var(--color-surface);
+        border: 1px solid var(--color-line);
+        border-radius: 24px;
+        box-shadow: var(--shadow-card);
         padding: 4vw;
         @include mobile {
             flex-direction: column;
@@ -92,8 +99,12 @@
 
 .left {
     &-header {
-        font-size: fluid(50,17);
-        line-height: fluid(60,30);
+        font-family: var(--font-family-heading);
+        font-weight: 500;
+        letter-spacing: -0.015em;
+        color: var(--color-text);
+        font-size: fluid(44,17);
+        line-height: fluid(52,30);
         margin-bottom: 4vw;
         @include mobile {
             font-size: fluid(150,30);
@@ -108,16 +119,20 @@
         display: flex;
         flex-direction: column;
         gap: 10px;
+        color: var(--color-text-muted);
 
         &-header {
-            font-size: fluid(30,15);
+            font-size: fluid(24,15);
+            font-weight: 600;
+            color: var(--color-text);
             margin-bottom: 20px;
             @include mobile {
                 font-size: fluid(80,20);
             }
         }
         &-item {
-            font-size: fluid(20,10);
+            font-size: fluid(18,10);
+            line-height: 1.55;
             @include mobile {
                 font-size: fluid(60,15);
             }
@@ -127,7 +142,11 @@
 
 .right {
     &-header {
-        font-size: fluid(30,10);
+        font-family: var(--font-family-heading);
+        font-weight: 500;
+        line-height: 1.25;
+        color: var(--color-text);
+        font-size: fluid(28,10);
         text-align: center;
         margin-bottom: fluid(80, 20);
         @include mobile {
@@ -136,18 +155,23 @@
     }
 
     &-button-send {
+        font-family: var(--font-family-base);
+        font-weight: 600;
+        background-color: var(--color-text) !important;
         padding: fluid(25,1) fluid(40,1) !important;
-        border-radius: fluid(50,20) !important;
+        border-radius: 999px !important;
         margin-block: 0 fluid(20, 10) !important;
         span {
-            font-size: fluid(25, 10);
+            font-size: fluid(22, 10);
             @include mobile {
                 font-size: fluid(70, 17);
             }
         }
+        @include hover {
+            background-color: var(--color-blue) !important;
+        }
         @include mobile {
             padding: 4vw !important;
-            border-radius: 50px !important;
         }
     }
 }
