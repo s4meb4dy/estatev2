@@ -9,6 +9,11 @@
         width: 100%;
         margin: 0;
 
+        @media (width <= 900px) {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+        }
+
         @include mobile {
             grid-template-columns: repeat(auto-fit, minmax(37vw, 1fr));
         }
@@ -74,6 +79,13 @@
         @include hover {
             transform: translateY(-6px);
             box-shadow: var(--shadow-soft);
+        }
+
+        @media (width <= 900px) {
+            height: auto;
+            min-height: 260px;
+            gap: 20px;
+            padding: 20px;
         }
 
         @include mobile {
@@ -192,6 +204,10 @@
 
         @include hover {
             background-color: var(--color-text);
+        }
+
+        @media (width <= 900px) {
+            white-space: nowrap;
         }
 
         &-take {
