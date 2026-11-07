@@ -73,7 +73,7 @@ const AllContacts = () => {
                     <p className="contacts-form-tel">
                         Введите номер телефона
                     </p>
-                    <input type="tel" required placeholder='Ваш номер телефона' className="contacts-form-tel-input"/>
+                    <input type="tel" required placeholder='+7 (___) ___-__-__' className="contacts-form-tel-input"/>
                     
                     <p className="contacts-form-mail">
                         Введит эл.почту

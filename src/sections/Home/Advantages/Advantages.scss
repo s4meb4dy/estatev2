@@ -51,7 +51,15 @@
 
 .adv {
     &-item {
+        position: relative;
+        overflow: hidden;
         background-color: var(--color-surface);
+        background-image:
+            linear-gradient(to right, rgba(185, 154, 91, 0.55), rgba(185, 154, 91, 0.55)),
+            linear-gradient(to bottom, rgba(185, 154, 91, 0.55), rgba(185, 154, 91, 0.55));
+        background-repeat: no-repeat;
+        background-position: right 28px top 28px, right 28px top 28px;
+        background-size: 18px 1px, 1px 18px;
         border: 1px solid var(--color-line);
         padding: fluid(44, 18);
         border-radius: 24px;
@@ -60,10 +68,61 @@
         flex-direction: column;
         justify-content: space-between;
 
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background-image:
+                linear-gradient(to right, rgba(185, 154, 91, 0.11) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(185, 154, 91, 0.11) 1px, transparent 1px);
+            background-size: 40px 40px;
+            -webkit-mask-image: radial-gradient(130% 130% at 100% 100%, #000 0%, transparent 62%);
+            mask-image: radial-gradient(130% 130% at 100% 100%, #000 0%, transparent 62%);
+            pointer-events: none;
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            right: -72px;
+            bottom: -72px;
+            z-index: 0;
+            width: 210px;
+            height: 210px;
+            border: 1px solid rgba(185, 154, 91, 0.34);
+            border-radius: 50%;
+            box-shadow:
+                0 0 0 26px rgba(185, 154, 91, 0.06),
+                0 0 0 52px rgba(185, 154, 91, 0.035);
+            pointer-events: none;
+        }
+
+        > * {
+            position: relative;
+            z-index: 1;
+        }
+
         @include mobile {
+            background-position: right 20px top 20px, right 20px top 20px;
+            background-size: 14px 1px, 1px 14px;
             border-radius: 4vw;
             height: 58vw;
             padding: 7vw;
+
+            &::before {
+                background-size: 24px 24px;
+            }
+
+            &::after {
+                right: -14vw;
+                bottom: -14vw;
+                width: 42vw;
+                height: 42vw;
+                box-shadow:
+                    0 0 0 5vw rgba(185, 154, 91, 0.06),
+                    0 0 0 10vw rgba(185, 154, 91, 0.035);
+            }
         }
     }
 

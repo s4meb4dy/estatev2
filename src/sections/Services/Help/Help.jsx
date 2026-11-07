@@ -28,7 +28,7 @@ const Help = () => {
                     <p className="right-header">Заполните форму, и мы свяжемся с вами как можно быстрее</p>
                     <form action="https://api.web3forms.com/submit" method="POST" className="help-form-header" id="HelpForm">
                         <input type="hidden" name="access_key" value="0019b786-9ec4-4f2d-a771-7529d847cff6"></input>
-                        <input type="tel" id="HelpPhone" name="first-name" required="required" placeholder='+7(___)___-__-__' autocomplete="off"/>
+                        <input type="tel" id="HelpPhone" name="first-name" required="required" placeholder='+7 (___) ___-__-__' autocomplete="off"/>
                         <button type="submit" className="right-button-send"><span>Оставить заявку</span></button>
                     </form>
                     <a 
