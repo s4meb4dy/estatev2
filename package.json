@@ -3,8 +3,12 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "prestart": "npm run validate:catalog",
     "start": "minista",
+    "prebuild": "npm run validate:catalog",
     "build": "minista build",
+    "test": "node --test",
+    "validate:catalog": "node scripts/validate-catalog.js",
     "preview": "minista preview"
   },
   "prettier": {
@@ -21,8 +25,7 @@
     "@a1rth/css-normalize": "^1.1.9",
     "classnames": "^2.5.1",
     "imask": "^7.6.1",
-    "react-image-gallery": "^1.4.0",
     "react-router-dom": "^6.22.3",
-    "swiper": "^11.1.15"
+    "zod": "^3.25.76"
   }
 }

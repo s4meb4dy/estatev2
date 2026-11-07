@@ -65,6 +65,9 @@ export default defineConfig({
     alias: [{
         find: '@/',
         replacement: path.resolve('src') + '/'
+    }, {
+        find: '@shared/',
+        replacement: path.resolve('shared') + '/'
     }],
   },
   css: {

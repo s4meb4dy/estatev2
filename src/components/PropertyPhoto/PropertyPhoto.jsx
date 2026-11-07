@@ -2,9 +2,13 @@ import './PropertyPhoto.scss'
 
 const PropertyPhoto = ({
   src,
+  srcSet,
+  sizes,
   alt = '',
   className = '',
   loading = 'lazy',
+  width,
+  height,
 }) => {
   const setOrientation = (image) => {
     if (!image || !image.naturalWidth || !image.naturalHeight) return
@@ -18,7 +22,7 @@ const PropertyPhoto = ({
   }
 
   // Фото может загрузиться ещё до гидратации React, поэтому проверяем
-  // готовность изображения и при монтировании, а не только по onLoad.
+  // готовность изображения при монтировании, а не только по onLoad.
   const handleImageRef = (image) => {
     if (image?.complete) {
       setOrientation(image)
@@ -39,6 +43,8 @@ const PropertyPhoto = ({
       <img
         className="property-photo__backdrop"
         src={src}
+        srcSet={srcSet}
+        sizes={sizes}
         alt=""
         aria-hidden="true"
         loading={loading}
@@ -48,7 +54,11 @@ const PropertyPhoto = ({
         ref={handleImageRef}
         className="property-photo__image"
         src={src}
+        srcSet={srcSet}
+        sizes={sizes}
         alt={alt}
+        width={width}
+        height={height}
         loading={loading}
         decoding="async"
         onLoad={(event) => setOrientation(event.currentTarget)}

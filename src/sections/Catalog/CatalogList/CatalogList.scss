@@ -19,3 +19,14 @@
         font-size: 5.2vw;
     }
 }
+
+.catalog-empty {
+    margin: fluid(40, 24) 10vw 0;
+    padding: fluid(30, 20);
+    border: 1px solid var(--color-line);
+    border-radius: var(--border-radius-l);
+    background-color: var(--color-surface);
+    color: var(--color-text-muted);
+    font-size: fluid(18, 15);
+    line-height: 1.6;
+}

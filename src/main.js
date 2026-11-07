@@ -1,6 +1,6 @@
 import OverlayMenu from './modules/OverlayMenu';
 import ConsulationMenu from "./modules/ConsulationModal"
-import SwiperCatalogImg from './modules/SwiperCatalogImg';
+import PropertyGallery from './modules/PropertyGallery';
 import PropertyPhotoOrientation from './modules/PropertyPhotoOrientation';
 import PhoneMask from './modules/PhoneMask';
 
@@ -11,6 +11,6 @@ if (document.querySelector('.service-button')) {
     new ConsulationMenu(); // Инициализируем только если элементы найдены
   }
 
-if (document.querySelector('.paginate.left')) {
-  SwiperCatalogImg()
+if (document.querySelector('[data-js-property-gallery]')) {
+  PropertyGallery()
 }

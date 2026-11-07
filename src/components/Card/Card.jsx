@@ -1,25 +1,26 @@
 import PropertyPhoto from '@/components/PropertyPhoto'
+import { formatPrice, formatPricePerM2 } from '@shared/catalog/format'
 import './Card.scss'
 
-const Card = (props) => {
+const Card = ({ property }) => {
   const {
     title,
     address,
     price,
-    smallPrice,
+    pricePerM2,
     description,
     images = [],
-    linkToPage
-  } = props
+    slug,
+  } = property
 
-  const photos = Array.isArray(images) ? images.filter(Boolean) : []
+  const photos = images
+    .map((image) => (typeof image === 'string' ? image : image?.url))
+    .filter(Boolean)
+
   const extraCount = Math.max(photos.length - 4, 0)
   const thumbnailPhotos = photos.slice(1, extraCount > 0 ? 4 : 5)
-
-  const formatPrice = (value) => {
-    if (value === undefined || value === null || value === '') return ''
-    return typeof value === 'number' ? value.toLocaleString('ru-RU') : value
-  }
+  const priceText = formatPrice(price)
+  const pricePerM2Text = formatPricePerM2(pricePerM2)
 
   return (
     <div className="cards-container">
@@ -63,11 +64,11 @@ const Card = (props) => {
           </div>
 
           <div className="info-section">
-            <a className="link-to-current-page" href={linkToPage}>{title}</a>
+            <a className="link-to-current-page" href={`/Catalog/${slug}`}>{title}</a>
             <p className="address">{address}</p>
-            <p className="price">{formatPrice(price)} ₽</p>
-            <p className="smallPrice">{formatPrice(smallPrice)} ₽/м²</p>
-            <p className="description">{description}</p>
+            {priceText && <p className="price">{priceText} ₽</p>}
+            {pricePerM2Text && <p className="smallPrice">{pricePerM2Text}</p>}
+            {description && <p className="description">{description}</p>}
           </div>
         </article>
         <p className="nothing-line"></p>

@@ -498,3 +498,20 @@ $angleActive: 25deg;
   .path-fill {
     fill: var(--color-white) !important; 
   }
+// Кнопки-миниатюры и активное состояние галереи
+.left-roulette-item-small {
+    appearance: none;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.left-roulette-item-small[data-key='active'] img {
+    outline: 2px solid var(--color-gold);
+    outline-offset: -2px;
+}
+
+.object-header {
+    margin: 0;
+}
