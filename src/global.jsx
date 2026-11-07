@@ -12,6 +12,7 @@ export default function (props) {
         title,
         url,
     } = props
+    const isCatalogPage = /catalog/i.test(url || '')
 
   return (
     <>
@@ -23,6 +24,12 @@ export default function (props) {
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="manifest" href="/site.webmanifest" />
       </Head>  
+      {!isCatalogPage && (
+        <div className="site-bg" aria-hidden="true">
+          <span className="site-bg__word">ГОРОД</span>
+          <span className="site-bg__vertical">недвижимость</span>
+        </div>
+      )}
       <Header />
       <Navigation />
       <Content>
