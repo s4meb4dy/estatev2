@@ -24,27 +24,27 @@ const Footer = () => {
                             </a>
                         </li>
                         <li className="footer-navigatoin-list-item item-2">
-                            <a href="/services" className="footer-navigation-to link-2">
+                            <a href="/Services" className="footer-navigation-to link-2">
                                 Все услуги
                             </a>
                         </li>
                         <li className="footer-navigatoin-list-item item-3">
-                            <a href="/catalog" className="footer-navigation-to link-3">
+                            <a href="/Catalog" className="footer-navigation-to link-3">
                                 Каталог недвижимости
                             </a>
                         </li>
                         <li className="footer-navigatoin-list-item item-4">
-                            <a href="/about" className="footer-navigation-to link-4">
+                            <a href="/About" className="footer-navigation-to link-4">
                                 О компании
                             </a>
                         </li>
                         <li className="footer-navigatoin-list-item item-5">
-                            <a href="/reviews" className="footer-navigation-to link-5">
+                            <a href="/Reviews" className="footer-navigation-to link-5">
                                 Отзывы
                             </a>
                         </li>
                         <li className="footer-navigatoin-list-item item-6">
-                            <a href="/contacts" className="footer-navigation-to link-6">
+                            <a href="/Contacts" className="footer-navigation-to link-6">
                                 Контакты
                             </a>
                         </li>

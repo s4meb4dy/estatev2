@@ -11,15 +11,15 @@ const Navigation = () => {
                     </a>
                     </li>
                     <p className='nothing-vertical'></p>
-                    <li className='nav-list-item'><a href="/services">услуги</a></li>
+                    <li className='nav-list-item'><a href="/Services">услуги</a></li>
                     <p className='nothing-vertical'></p>
-                    <li className='nav-list-item'><a href='/catalog'>каталог недвижимости</a></li>
+                    <li className='nav-list-item'><a href='/Catalog'>каталог недвижимости</a></li>
                     <p className='nothing-vertical'></p>
-                    <li className='nav-list-item'><a href='/about'>о компании</a></li>
+                    <li className='nav-list-item'><a href='/About'>о компании</a></li>
                     <p className='nothing-vertical'></p>
-                    <li className='nav-list-item'><a href='/reviews'>отзывы</a></li>
+                    <li className='nav-list-item'><a href='/Reviews'>отзывы</a></li>
                     <p className='nothing-vertical'></p>
-                    <li className='nav-list-item'><a href='/contacts'>контакты</a></li>
+                    <li className='nav-list-item'><a href='/Contacts'>контакты</a></li>
                 </ul>
             </nav>
         </dialog>
