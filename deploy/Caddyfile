@@ -1,0 +1,40 @@
+{$SITE_DOMAIN:http://localhost} {
+    encode zstd gzip
+
+    root * /srv/site
+
+    @api path /api/* /health
+    handle @api {
+        reverse_proxy api:3000
+    }
+
+    redir /CurrentCatalogCardFirst /Catalog/kvartira-3-komnaty-131-m2-tverskaya-10 301
+    redir /CurrentCatalogCardFirst.html /Catalog/kvartira-3-komnaty-131-m2-tverskaya-10 301
+    redir /CurrentCatalogCardSecond /Catalog/kvartira-1-komnata-50-m2-pushkina-20 301
+    redir /CurrentCatalogCardSecond.html /Catalog/kvartira-1-komnata-50-m2-pushkina-20 301
+    redir /CurrentCatalogCardThird /Catalog/kvartira-3-komnaty-131-m2-pushkina-20 301
+    redir /CurrentCatalogCardThird.html /Catalog/kvartira-3-komnaty-131-m2-pushkina-20 301
+
+    try_files {path} {path}.html {path}/index.html
+    file_server
+
+    handle_errors {
+        rewrite * /404.html
+        file_server
+    }
+
+    header {
+        X-Content-Type-Options nosniff
+        X-Frame-Options SAMEORIGIN
+        Referrer-Policy strict-origin-when-cross-origin
+        Permissions-Policy "camera=(), microphone=(), geolocation=()"
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        -Server
+    }
+
+    @assets path /assets/*
+    header @assets Cache-Control "public, max-age=31536000, immutable"
+
+    @images path /img/* /reviews/*
+    header @images Cache-Control "public, max-age=2592000"
+}

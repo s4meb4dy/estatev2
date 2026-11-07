@@ -1,0 +1,98 @@
+name: estatev2
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-estatev2}
+      POSTGRES_USER: ${POSTGRES_USER:-estatev2}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Задайте POSTGRES_PASSWORD в .env}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-estatev2} -d ${POSTGRES_DB:-estatev2}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  migrate:
+    image: estatev2-api
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    command: ["node", "scripts/migrate.js"]
+    restart: "no"
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://${POSTGRES_USER:-estatev2}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-estatev2}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  api:
+    image: estatev2-api
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: 3000
+      DATABASE_URL: postgres://${POSTGRES_USER:-estatev2}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-estatev2}
+      API_TOKEN: ${API_TOKEN:?Задайте API_TOKEN в .env}
+      SITE_ORIGIN: ${SITE_ORIGIN:-}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      TRUST_PROXY: "true"
+      RATE_LIMIT_MAX: ${RATE_LIMIT_MAX:-120}
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+
+  site-build:
+    image: estatev2-site-builder
+    build:
+      context: .
+      dockerfile: Dockerfile.site-builder
+    restart: "no"
+    environment:
+      CATALOG_SOURCE: api
+      CATALOG_API_URL: http://api:3000
+    volumes:
+      - site-dist:/srv/site
+    depends_on:
+      api:
+        condition: service_healthy
+
+  site:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    environment:
+      SITE_DOMAIN: ${SITE_DOMAIN:-http://localhost}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - site-dist:/srv/site
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    command: sh -c "while [ ! -f /srv/site/index.html ]; do sleep 1; done; caddy run --config /etc/caddy/Caddyfile --adapter caddyfile"
+    depends_on:
+      site-build:
+        condition: service_completed_successfully
+
+volumes:
+  db-data:
+  site-dist:
+  caddy-data:
+  caddy-config:
