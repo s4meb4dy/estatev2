@@ -10,8 +10,17 @@ import {
 } from '../schemas/property.js'
 import { createPropertyService } from '../services/properties.service.js'
 
-export async function propertyRoutes(app, { repository }) {
+export async function propertyRoutes(
+    app,
+    { repository, uploadStorage, rebuildNotifier }
+) {
     const service = createPropertyService(repository)
+
+    function notifyRebuild(reason) {
+        if (rebuildNotifier) {
+            void rebuildNotifier.notify(reason)
+        }
+    }
 
     app.get(
         '/api/properties',
@@ -53,6 +62,8 @@ export async function propertyRoutes(app, { repository }) {
             const input = propertyCreateSchema.parse(request.body)
             const property = await service.create(input)
 
+            notifyRebuild('property.created')
+
             return reply.code(201).send(property)
         }
     )
@@ -66,8 +77,11 @@ export async function propertyRoutes(app, { repository }) {
         async (request) => {
             const id = propertyIdSchema.parse(request.params.id)
             const input = propertyUpdateSchema.parse(request.body)
+            const property = await service.update(id, input)
 
-            return service.update(id, input)
+            notifyRebuild('property.updated')
+
+            return property
         }
     )
 
@@ -84,6 +98,8 @@ export async function propertyRoutes(app, { repository }) {
 
             await service.remove(id, { hard })
 
+            notifyRebuild('property.deleted')
+
             return reply.code(204).send()
         }
     )
@@ -96,7 +112,72 @@ export async function propertyRoutes(app, { repository }) {
             const input = imageCreateSchema.parse(request.body)
             const property = await service.addImage(id, input)
 
+            notifyRebuild('image.added')
+
             return reply.code(201).send(property)
+        }
+    )
+
+    app.post(
+        '/api/properties/:id/images/upload',
+        {
+            preHandler: app.authenticate,
+            config: { rateLimit: { max: 60, timeWindow: '1 minute' } },
+        },
+        async (request, reply) => {
+            const id = propertyIdSchema.parse(request.params.id)
+
+            if (!request.isMultipart()) {
+                return reply.code(415).send({
+                    error: 'unsupported_media_type',
+                    message: 'Ожидается multipart/form-data с полем file',
+                })
+            }
+
+            const fields = {}
+            let uploaded = null
+
+            try {
+                for await (const part of request.parts()) {
+                    if (part.type === 'file') {
+                        if (part.fieldname !== 'file' || uploaded) {
+                            part.file.resume()
+                            continue
+                        }
+
+                        uploaded = await uploadStorage.saveStream(
+                            part.file,
+                            part.mimetype
+                        )
+                    } else {
+                        fields[part.fieldname] = String(part.value)
+                    }
+                }
+
+                if (!uploaded) {
+                    return reply.code(400).send({
+                        error: 'file_required',
+                        message: 'Нужно передать файл в поле file',
+                    })
+                }
+
+                const property = await service.addImage(id, {
+                    url: uploaded.url,
+                    alt: fields.alt ?? '',
+                    isCover:
+                        fields.isCover === 'true' || fields.isCover === '1',
+                })
+
+                notifyRebuild('image.uploaded')
+
+                return reply.code(201).send(property)
+            } catch (error) {
+                if (uploaded) {
+                    await uploadStorage.remove(uploaded.url).catch(() => {})
+                }
+
+                throw error
+            }
         }
     )
 
@@ -107,8 +188,11 @@ export async function propertyRoutes(app, { repository }) {
             const id = propertyIdSchema.parse(request.params.id)
             const imageId = propertyIdSchema.parse(request.params.imageId)
             const input = imageUpdateSchema.parse(request.body)
+            const property = await service.updateImage(id, imageId, input)
 
-            return service.updateImage(id, imageId, input)
+            notifyRebuild('image.updated')
+
+            return property
         }
     )
 
@@ -118,8 +202,11 @@ export async function propertyRoutes(app, { repository }) {
         async (request) => {
             const id = propertyIdSchema.parse(request.params.id)
             const imageId = propertyIdSchema.parse(request.params.imageId)
+            const property = await service.removeImage(id, imageId)
 
-            return service.removeImage(id, imageId)
+            notifyRebuild('image.deleted')
+
+            return property
         }
     )
 
@@ -129,8 +216,11 @@ export async function propertyRoutes(app, { repository }) {
         async (request) => {
             const id = propertyIdSchema.parse(request.params.id)
             const { imageIds } = imageOrderSchema.parse(request.body)
+            const property = await service.reorderImages(id, imageIds)
 
-            return service.reorderImages(id, imageIds)
+            notifyRebuild('image.reordered')
+
+            return property
         }
     )
 }

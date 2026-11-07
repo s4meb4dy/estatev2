@@ -12,6 +12,15 @@ const envSchema = z.object({
         .default('info'),
     TRUST_PROXY: z.string().optional().default('false'),
     RATE_LIMIT_MAX: z.coerce.number().int().min(0).default(120),
+    UPLOAD_DIR: z.string().optional().default('./uploads'),
+    UPLOAD_PUBLIC_PREFIX: z.string().optional().default('/uploads'),
+    UPLOAD_MAX_BYTES: z.coerce
+        .number()
+        .int()
+        .min(1024)
+        .default(10 * 1024 * 1024),
+    REBUILD_WEBHOOK_URL: z.string().optional().default(''),
+    REBUILD_TOKEN: z.string().optional().default(''),
 })
 
 export function loadConfig(env = process.env) {
@@ -29,5 +38,10 @@ export function loadConfig(env = process.env) {
         logLevel: parsed.LOG_LEVEL,
         trustProxy: parsed.TRUST_PROXY === 'true' || parsed.TRUST_PROXY === '1',
         rateLimitMax: parsed.RATE_LIMIT_MAX,
+        uploadDir: parsed.UPLOAD_DIR,
+        uploadPublicPrefix: parsed.UPLOAD_PUBLIC_PREFIX,
+        uploadMaxBytes: parsed.UPLOAD_MAX_BYTES,
+        rebuildWebhookUrl: parsed.REBUILD_WEBHOOK_URL,
+        rebuildToken: parsed.REBUILD_TOKEN,
     }
 }

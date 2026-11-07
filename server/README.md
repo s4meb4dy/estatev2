@@ -28,6 +28,11 @@ npm run dev
 | `LOG_LEVEL` | нет | `info`, `debug`, `silent` и т.д. |
 | `TRUST_PROXY` | нет | `true`, если API стоит за Caddy |
 | `RATE_LIMIT_MAX` | нет | Запросов в минуту, по умолчанию 120 |
+| `UPLOAD_DIR` | нет | Каталог загруженных фото, по умолчанию `./uploads` |
+| `UPLOAD_PUBLIC_PREFIX` | нет | Публичный префикс URL, по умолчанию `/uploads` |
+| `UPLOAD_MAX_BYTES` | нет | Максимальный размер файла, по умолчанию 10 МБ |
+| `REBUILD_WEBHOOK_URL` | нет | URL сервиса пересборки статики |
+| `REBUILD_TOKEN` | нет | Токен для сервиса пересборки |
 
 ## Авторизация
 
@@ -54,7 +59,8 @@ X-API-Token: <API_TOKEN>
 | `PATCH` | `/api/properties/:id` | токен | Обновить объект |
 | `DELETE` | `/api/properties/:id` | токен | Архивировать объект |
 | `DELETE` | `/api/properties/:id?hard=true` | токен | Удалить навсегда |
-| `POST` | `/api/properties/:id/images` | токен | Добавить изображение |
+| `POST` | `/api/properties/:id/images` | токен | Добавить изображение по URL |
+| `POST` | `/api/properties/:id/images/upload` | токен | Загрузить файл и добавить изображение |
 | `PATCH` | `/api/properties/:id/images/:imageId` | токен | Изменить изображение |
 | `DELETE` | `/api/properties/:id/images/:imageId` | токен | Удалить изображение |
 | `PUT` | `/api/properties/:id/images/order` | токен | Задать порядок изображений |
@@ -125,8 +131,22 @@ curl -X DELETE "http://localhost:3000/api/properties/<id>?hard=true" \
 
 ## Изображения
 
+Загрузка файла (`multipart/form-data`, поле `file`, до 10 МБ):
+
 ```bash
-# добавить
+curl -X POST http://localhost:3000/api/properties/<id>/images/upload \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -F "file=@photo.jpg" \
+  -F "alt=Фасад" \
+  -F "isCover=true"
+```
+
+Поддерживаются JPEG, PNG, WebP, AVIF и GIF. Файл сохраняется в `UPLOAD_DIR`,
+а в объект записывается URL вида `/uploads/<имя>`. Необязательные поля формы:
+`alt` и `isCover`.
+
+```bash
+# добавить по URL
 curl -X POST http://localhost:3000/api/properties/<id>/images \
   -H "Authorization: Bearer $API_TOKEN" \
   -H "Content-Type: application/json" \

@@ -1,6 +1,34 @@
 import { ZodError } from 'zod'
 import { AppError } from '../errors.js'
 
+const MULTIPART_ERRORS = {
+    FST_INVALID_MULTIPART_CONTENT_TYPE: {
+        status: 415,
+        error: 'unsupported_media_type',
+        message: 'Ожидается multipart/form-data',
+    },
+    FST_REQ_FILE_TOO_LARGE: {
+        status: 413,
+        error: 'file_too_large',
+        message: 'Загруженный файл слишком большой',
+    },
+    FST_FILES_LIMIT: {
+        status: 400,
+        error: 'too_many_files',
+        message: 'Можно загрузить только один файл за раз',
+    },
+    FST_FIELDS_LIMIT: {
+        status: 400,
+        error: 'too_many_fields',
+        message: 'Слишком много полей формы',
+    },
+    FST_PARTS_LIMIT: {
+        status: 400,
+        error: 'too_many_parts',
+        message: 'Слишком много частей формы',
+    },
+}
+
 export function registerErrorHandler(app) {
     app.setErrorHandler((error, request, reply) => {
         if (error instanceof ZodError) {
@@ -19,6 +47,15 @@ export function registerErrorHandler(app) {
                 error: error.code,
                 message: error.message,
                 ...(error.details ? { details: error.details } : {}),
+            })
+        }
+
+        const multipartError = MULTIPART_ERRORS[error.code]
+
+        if (multipartError) {
+            return reply.code(multipartError.status).send({
+                error: multipartError.error,
+                message: multipartError.message,
             })
         }
 

@@ -8,3 +8,5 @@ backups
 *.log
 .env
 server/.env
+uploads
+server/uploads

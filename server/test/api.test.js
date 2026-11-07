@@ -1,9 +1,16 @@
 import assert from 'node:assert/strict'
-import test from 'node:test'
+import fs from 'node:fs/promises'
+import os from 'node:os'
+import path from 'node:path'
+import test, { after } from 'node:test'
 import { buildApp } from '../src/app.js'
 import { createInMemoryRepository } from '../test-support/in-memory-repository.js'
 
 const TOKEN = 'test-token-1234567890'
+const uploadDir = path.join(
+    os.tmpdir(),
+    `estatev2-test-uploads-${process.pid}`
+)
 const config = {
     nodeEnv: 'test',
     host: '127.0.0.1',
@@ -14,7 +21,16 @@ const config = {
     logLevel: 'silent',
     trustProxy: false,
     rateLimitMax: 0,
+    uploadDir,
+    uploadPublicPrefix: '/uploads',
+    uploadMaxBytes: 1024 * 1024,
+    rebuildWebhookUrl: '',
+    rebuildToken: '',
 }
+
+after(async () => {
+    await fs.rm(uploadDir, { recursive: true, force: true })
+})
 const auth = { authorization: `Bearer ${TOKEN}` }
 
 function sample(overrides = {}) {
@@ -404,6 +420,171 @@ test('порядок изображений сохраняется', async () =>
             response.json().images.map((image) => image.sortOrder),
             [0, 1]
         )
+    } finally {
+        await app.close()
+    }
+})
+
+function multipartBody({
+    content,
+    contentType = 'image/jpeg',
+    filename = 'photo.jpg',
+    fields = {},
+}) {
+    const boundary = `----estatev2${Date.now().toString(16)}`
+    const chunks = []
+
+    for (const [name, value] of Object.entries(fields)) {
+        chunks.push(
+            Buffer.from(
+                `--${boundary}\r\nContent-Disposition: form-data; name="${name}"\r\n\r\n${value}\r\n`
+            )
+        )
+    }
+
+    chunks.push(
+        Buffer.from(
+            `--${boundary}\r\nContent-Disposition: form-data; name="file"; filename="${filename}"\r\nContent-Type: ${contentType}\r\n\r\n`
+        )
+    )
+    chunks.push(content)
+    chunks.push(Buffer.from(`\r\n--${boundary}--\r\n`))
+
+    return {
+        payload: Buffer.concat(chunks),
+        headers: {
+            'content-type': `multipart/form-data; boundary=${boundary}`,
+        },
+    }
+}
+
+test('загрузка фото сохраняет файл и добавляет изображение', async () => {
+    const { app } = await setup()
+
+    try {
+        const property = await createProperty(app, {
+            status: 'draft',
+            images: [],
+        })
+        const body = multipartBody({
+            content: Buffer.from([0xff, 0xd8, 0xff, 0xd9]),
+            fields: { alt: 'Фасад', isCover: 'true' },
+        })
+
+        const response = await app.inject({
+            method: 'POST',
+            url: `/api/properties/${property.id}/images/upload`,
+            headers: { ...auth, ...body.headers },
+            payload: body.payload,
+        })
+
+        assert.equal(response.statusCode, 201, response.body)
+
+        const image = response.json().images[0]
+
+        assert.match(image.url, /^\/uploads\/.+\.jpg$/)
+        assert.equal(image.alt, 'Фасад')
+        assert.equal(image.isCover, true)
+        await fs.access(path.join(uploadDir, path.basename(image.url)))
+    } finally {
+        await app.close()
+    }
+})
+
+test('загрузка отклоняет неподдерживаемый тип и не-multipart запрос', async () => {
+    const { app } = await setup()
+
+    try {
+        const property = await createProperty(app, {
+            status: 'draft',
+            images: [],
+        })
+        const wrongType = multipartBody({
+            content: Buffer.from('not an image'),
+            contentType: 'text/plain',
+            filename: 'notes.txt',
+        })
+        const rejected = await app.inject({
+            method: 'POST',
+            url: `/api/properties/${property.id}/images/upload`,
+            headers: { ...auth, ...wrongType.headers },
+            payload: wrongType.payload,
+        })
+
+        assert.equal(rejected.statusCode, 415)
+        assert.equal(rejected.json().error, 'unsupported_media_type')
+
+        const json = await app.inject({
+            method: 'POST',
+            url: `/api/properties/${property.id}/images/upload`,
+            headers: auth,
+            payload: { url: '/img/x.jpg' },
+        })
+
+        assert.equal(json.statusCode, 415)
+    } finally {
+        await app.close()
+    }
+})
+
+test('загрузка требует токен и существующий объект', async () => {
+    const { app } = await setup()
+
+    try {
+        const property = await createProperty(app, {
+            status: 'draft',
+            images: [],
+        })
+        const body = multipartBody({
+            content: Buffer.from([0xff, 0xd8, 0xff, 0xd9]),
+        })
+
+        const noToken = await app.inject({
+            method: 'POST',
+            url: `/api/properties/${property.id}/images/upload`,
+            headers: body.headers,
+            payload: body.payload,
+        })
+
+        assert.equal(noToken.statusCode, 401)
+
+        const missing = await app.inject({
+            method: 'POST',
+            url: '/api/properties/00000000-0000-4000-8000-000000000000/images/upload',
+            headers: { ...auth, ...body.headers },
+            payload: body.payload,
+        })
+
+        assert.equal(missing.statusCode, 404)
+    } finally {
+        await app.close()
+    }
+})
+
+test('изменения уведомляют сервис пересборки', async () => {
+    const calls = []
+    const repository = createInMemoryRepository([])
+    const app = await buildApp({
+        repository,
+        config,
+        rebuildNotifier: {
+            notify: async (reason) => calls.push(reason),
+        },
+    })
+
+    try {
+        const property = await createProperty(app)
+
+        await app.inject({
+            method: 'PATCH',
+            url: `/api/properties/${property.id}`,
+            headers: auth,
+            payload: { title: 'Обновлено' },
+        })
+
+        await new Promise((resolve) => setImmediate(resolve))
+
+        assert.deepEqual(calls, ['property.created', 'property.updated'])
     } finally {
         await app.close()
     }

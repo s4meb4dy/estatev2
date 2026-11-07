@@ -32,9 +32,15 @@ POSTGRES_DB=estatev2
 POSTGRES_USER=estatev2
 POSTGRES_PASSWORD=<длинный пароль>
 API_TOKEN=<openssl rand -hex 32>
+REBUILD_TOKEN=<openssl rand -hex 32>
+REBUILD_DEBOUNCE_MS=5000
+UPLOAD_MAX_BYTES=10485760
 SITE_DOMAIN=example.com
 LOG_LEVEL=info
 ```
+
+`REBUILD_TOKEN` защищает внутренний сервис пересборки. Он не должен совпадать
+с `API_TOKEN`.
 
 `POSTGRES_PASSWORD` лучше делать буквенно-цифровым или URL-кодировать спецсимволы.
 
@@ -50,7 +56,10 @@ Compose поднимет:
 - `migrate` — применит миграции Drizzle и завершится;
 - `api` — Fastify API на внутреннем порту 3000;
 - `site-build` — соберёт статику из опубликованных объектов API;
-- `site` — Caddy со статикой и проксированием `/api/*` и `/health`.
+- `rebuilder` — пересоберёт статику после изменений в БД;
+- `site` — Caddy со статикой, загруженными фото и проксированием `/api/*` и `/health`.
+
+Загруженные фотографии хранятся в томе `uploads` и раздаются по `/uploads/*`.
 
 ## Проверка
 
@@ -72,6 +81,11 @@ docker compose exec api node scripts/seed.js
 ```
 
 Скрипт идемпотентен: объекты сопоставляются по `slug`, изображения перезаписываются.
+После импорта пересоберите статику, чтобы объекты появились на сайте:
+
+```bash
+docker compose run --rm site-build
+```
 
 ## Домен и HTTPS
 
@@ -97,35 +111,66 @@ docker compose up -d --build
 
 ## Резервные копии
 
+База данных и загруженные фотографии резервируются отдельно:
+
 ```bash
-chmod +x scripts/backup-db.sh
+chmod +x scripts/backup-db.sh scripts/backup-uploads.sh
 ./scripts/backup-db.sh
+./scripts/backup-uploads.sh
 ```
 
 Пример cron-задачи на каждый день в 03:00:
 
 ```cron
 0 3 * * * cd /opt/estatev2 && BACKUP_DIR=/opt/estatev2/backups ./scripts/backup-db.sh >> /var/log/estatev2-backup.log 2>&1
+10 3 * * * cd /opt/estatev2 && BACKUP_DIR=/opt/estatev2/backups ./scripts/backup-uploads.sh >> /var/log/estatev2-backup.log 2>&1
 ```
 
-Восстановление:
+Восстановление базы:
 
 ```bash
 gunzip -c backups/estatev2-YYYYMMDD-HHMMSS.sql.gz \
   | docker compose exec -T db psql -U estatev2 -d estatev2
 ```
 
+Восстановление фотографий:
+
+```bash
+docker compose exec -T site tar -xzf - -C /srv/site \
+  < backups/uploads-YYYYMMDD-HHMMSS.tar.gz
+```
+
+## Загрузка фотографий
+
+```bash
+curl -X POST http://localhost/api/properties/<id>/images/upload \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -F "file=@photo.jpg" \
+  -F "alt=Фасад" \
+  -F "isCover=true"
+```
+
+Файл сохраняется в томе `uploads`, объект получает URL `/uploads/<имя>`.
+Поддерживаются JPEG, PNG, WebP, AVIF и GIF, размер ограничен
+`UPLOAD_MAX_BYTES`.
+
 ## Пересборка сайта после изменений
 
-Сайт собирается сервисом `site-build` из опубликованных объектов API. После
-создания, изменения или удаления объекта пересоберите статику:
+API после создания, изменения или удаления объекта отправляет запрос сервису
+`rebuilder`. Тот выдерживает паузу `REBUILD_DEBOUNCE_MS`, собирает статику из
+API и заменяет файлы в общем томе `site-dist`. Caddy сразу отдаёт новую версию.
+
+Проверить состояние пересборки:
+
+```bash
+docker compose exec api node -e "fetch('http://rebuilder:3001/health').then(r=>r.text()).then(console.log)"
+```
+
+Принудительная пересборка:
 
 ```bash
 docker compose run --rm site-build
 ```
-
-Caddy сразу начнёт отдавать новую версию из общего тома `site-dist`.
-Автоматическая очередь пересборки после изменений в БД — следующий этап.
 
 ## Безопасность
 

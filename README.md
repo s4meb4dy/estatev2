@@ -10,6 +10,7 @@
 - `server/` — Fastify API, PostgreSQL, Drizzle ORM.
 - `deploy/` — Caddy.
 - `Dockerfile.site-builder` — сборка статики из API.
+- `scripts/rebuild-server.js` — автоматическая пересборка после изменений.
 - `docker-compose.yml` — PostgreSQL, миграции, API, сборка сайта и Caddy.
 
 ## Локальная разработка сайта
@@ -62,4 +63,5 @@ npm run build
 
 1. Сайт переведён на данные и единый шаблон объекта.
 2. Добавлены PostgreSQL, Fastify API, миграции, Docker Compose, Caddy и сборка статики из API.
-3. Следующий этап: очередь пересборки по событиям и Telegram-бот.
+3. Добавлены загрузка фотографий и автоматическая пересборка статики.
+4. Следующий этап: Telegram-бот для управления объектами.

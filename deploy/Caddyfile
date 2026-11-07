@@ -35,6 +35,6 @@
     @assets path /assets/*
     header @assets Cache-Control "public, max-age=31536000, immutable"
 
-    @images path /img/* /reviews/*
+    @images path /img/* /reviews/* /uploads/*
     header @images Cache-Control "public, max-age=2592000"
 }

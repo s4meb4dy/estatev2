@@ -9,3 +9,5 @@ dist
 .env
 server/.env
 backups
+uploads
+server/uploads

@@ -46,6 +46,13 @@ services:
       LOG_LEVEL: ${LOG_LEVEL:-info}
       TRUST_PROXY: "true"
       RATE_LIMIT_MAX: ${RATE_LIMIT_MAX:-120}
+      UPLOAD_DIR: /data/uploads
+      UPLOAD_PUBLIC_PREFIX: /uploads
+      UPLOAD_MAX_BYTES: ${UPLOAD_MAX_BYTES:-10485760}
+      REBUILD_WEBHOOK_URL: http://rebuilder:3001/rebuild
+      REBUILD_TOKEN: ${REBUILD_TOKEN:?Задайте REBUILD_TOKEN в .env}
+    volumes:
+      - uploads:/data/uploads
     depends_on:
       db:
         condition: service_healthy
@@ -72,6 +79,28 @@ services:
       api:
         condition: service_healthy
 
+  rebuilder:
+    image: estatev2-site-builder
+    build:
+      context: .
+      dockerfile: Dockerfile.site-builder
+    restart: unless-stopped
+    command: ["node", "scripts/rebuild-server.js"]
+    environment:
+      REBUILD_PORT: 3001
+      REBUILD_TOKEN: ${REBUILD_TOKEN:?Задайте REBUILD_TOKEN в .env}
+      REBUILD_DEBOUNCE_MS: ${REBUILD_DEBOUNCE_MS:-5000}
+      REBUILD_API_URL: http://api:3000
+      CATALOG_SOURCE: api
+      CATALOG_API_URL: http://api:3000
+    volumes:
+      - site-dist:/srv/site
+    depends_on:
+      api:
+        condition: service_healthy
+      site-build:
+        condition: service_completed_successfully
+
   site:
     image: caddy:2-alpine
     restart: unless-stopped
@@ -83,6 +112,7 @@ services:
       - "443:443/udp"
     volumes:
       - site-dist:/srv/site
+      - uploads:/srv/site/uploads
       - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy-data:/data
       - caddy-config:/config
@@ -94,5 +124,6 @@ services:
 volumes:
   db-data:
   site-dist:
+  uploads:
   caddy-data:
   caddy-config:

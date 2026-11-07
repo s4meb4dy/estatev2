@@ -10,7 +10,9 @@ FROM node:22-alpine
 ENV NODE_ENV=production
 WORKDIR /app
 
-RUN addgroup -S app && adduser -S app -G app
+RUN addgroup -S app && adduser -S app -G app \
+    && mkdir -p /data/uploads \
+    && chown -R app:app /data
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY server/package.json ./server/package.json
