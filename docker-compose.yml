@@ -101,6 +101,23 @@ services:
       site-build:
         condition: service_completed_successfully
 
+  bot:
+    image: estatev2-bot
+    build:
+      context: .
+      dockerfile: Dockerfile.bot
+    restart: "on-failure:5"
+    profiles: ["bot"]
+    environment:
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TELEGRAM_ADMIN_IDS: ${TELEGRAM_ADMIN_IDS:-}
+      API_URL: http://api:3000
+      API_TOKEN: ${API_TOKEN:?Задайте API_TOKEN в .env}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+    depends_on:
+      api:
+        condition: service_healthy
+
   site:
     image: caddy:2-alpine
     restart: unless-stopped

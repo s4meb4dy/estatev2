@@ -8,10 +8,11 @@
 - `shared/catalog/` — общие Zod-схемы, slug и форматирование.
 - `src/lib/catalog/repository.js` — источник данных сайта: `seed` или `api`.
 - `server/` — Fastify API, PostgreSQL, Drizzle ORM.
+- `bot/` — Telegram-бот управления объектами.
 - `deploy/` — Caddy.
 - `Dockerfile.site-builder` — сборка статики из API.
 - `scripts/rebuild-server.js` — автоматическая пересборка после изменений.
-- `docker-compose.yml` — PostgreSQL, миграции, API, сборка сайта и Caddy.
+- `docker-compose.yml` — PostgreSQL, миграции, API, сборка сайта, Caddy и бот.
 
 ## Локальная разработка сайта
 
@@ -52,6 +53,7 @@ npm run dev
 npm test
 npm run validate:catalog
 npm run api:test
+npm run bot:test
 npm run build
 ```
 
@@ -64,4 +66,4 @@ npm run build
 1. Сайт переведён на данные и единый шаблон объекта.
 2. Добавлены PostgreSQL, Fastify API, миграции, Docker Compose, Caddy и сборка статики из API.
 3. Добавлены загрузка фотографий и автоматическая пересборка статики.
-4. Следующий этап: Telegram-бот для управления объектами.
+4. Добавлен Telegram-бот управления объектами: [bot/README.md](bot/README.md).

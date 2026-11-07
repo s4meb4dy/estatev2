@@ -33,6 +33,24 @@ export async function propertyRoutes(
     )
 
     app.get(
+        '/api/properties/by-id/:id',
+        { preHandler: app.authenticate },
+        async (request, reply) => {
+            const id = propertyIdSchema.parse(request.params.id)
+            const property = await service.getById(id)
+
+            if (!property) {
+                return reply.code(404).send({
+                    error: 'property_not_found',
+                    message: 'Объект не найден',
+                })
+            }
+
+            return property
+        }
+    )
+
+    app.get(
         '/api/properties/:slug',
         { preHandler: app.optionalAuthenticate },
         async (request, reply) => {

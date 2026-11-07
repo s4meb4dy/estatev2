@@ -13,6 +13,9 @@
     "api:dev": "npm --prefix server run dev",
     "api:start": "npm --prefix server start",
     "api:test": "npm --prefix server test",
+    "bot:dev": "npm --prefix bot run dev",
+    "bot:start": "npm --prefix bot start",
+    "bot:test": "npm --prefix bot test",
     "db:generate": "npm --prefix server run db:generate",
     "db:migrate": "npm --prefix server run db:migrate",
     "db:seed": "npm --prefix server run db:seed"

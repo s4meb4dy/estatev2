@@ -1,0 +1,20 @@
+{
+  "name": "estatev2-bot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Telegram-бот управления каталогом estatev2",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "node --watch src/index.js",
+    "start": "node src/index.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "dotenv": "^18.0.9",
+    "grammy": "^1.46.0",
+    "zod": "^4.6.7"
+  }
+}

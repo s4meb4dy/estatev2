@@ -61,6 +61,12 @@ Compose поднимет:
 
 Загруженные фотографии хранятся в томе `uploads` и раздаются по `/uploads/*`.
 
+С профилем `bot` дополнительно запускается Telegram-бот:
+
+```bash
+docker compose --profile bot up -d --build bot
+```
+
 ## Проверка
 
 ```bash
@@ -171,6 +177,33 @@ docker compose exec api node -e "fetch('http://rebuilder:3001/health').then(r=>r
 ```bash
 docker compose run --rm site-build
 ```
+
+## Telegram-бот
+
+1. Создайте бота у [@BotFather](https://t.me/BotFather) и получите токен.
+2. Узнайте свой Telegram id через [@userinfobot](https://t.me/userinfobot).
+3. Добавьте в `.env`:
+
+```bash
+TELEGRAM_BOT_TOKEN=123456789:...
+TELEGRAM_ADMIN_IDS=123456789
+```
+
+4. Запустите бота:
+
+```bash
+docker compose --profile bot up -d --build bot
+```
+
+Логи и перезапуск:
+
+```bash
+docker compose logs -f bot
+docker compose --profile bot restart bot
+```
+
+Бот работает через внутренний адрес `http://api:3000` и не публикует порты
+наружу. Подробности: [bot/README.md](../bot/README.md).
 
 ## Безопасность
 

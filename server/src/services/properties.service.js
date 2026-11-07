@@ -85,6 +85,19 @@ export function createPropertyService(repository, { now = () => new Date() } = {
         return property
     }
 
+    async function getById(id, { includeAll = true } = {}) {
+        const property = await repository.findById(id)
+
+        if (!property) {
+            return null
+        }
+        if (!includeAll && property.status !== 'published') {
+            return null
+        }
+
+        return property
+    }
+
     async function create(input) {
         const status = input.status ?? 'draft'
         const images = (input.images ?? []).map((image, index) => ({
@@ -316,6 +329,7 @@ export function createPropertyService(repository, { now = () => new Date() } = {
     return {
         list,
         getBySlug,
+        getById,
         create,
         update,
         archive,

@@ -10,3 +10,5 @@ backups
 server/.env
 uploads
 server/uploads
+bot/node_modules
+bot/.env

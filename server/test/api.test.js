@@ -162,6 +162,32 @@ test('объект открывается по slug, черновик скрыт
     }
 })
 
+test('объект открывается по id только с токеном', async () => {
+    const { app } = await setup()
+
+    try {
+        const property = await createProperty(app)
+
+        const authorized = await app.inject({
+            method: 'GET',
+            url: `/api/properties/by-id/${property.id}`,
+            headers: auth,
+        })
+
+        assert.equal(authorized.statusCode, 200)
+        assert.equal(authorized.json().id, property.id)
+
+        const publicRequest = await app.inject({
+            method: 'GET',
+            url: `/api/properties/by-id/${property.id}`,
+        })
+
+        assert.equal(publicRequest.statusCode, 401)
+    } finally {
+        await app.close()
+    }
+})
+
 test('создание требует API-токен', async () => {
     const { app } = await setup()
 

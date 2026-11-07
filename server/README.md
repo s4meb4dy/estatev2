@@ -55,6 +55,7 @@ X-API-Token: <API_TOKEN>
 | `GET` | `/health` | публичный | Проверка API и БД |
 | `GET` | `/api/properties` | публичный | Список опубликованных объектов |
 | `GET` | `/api/properties/:slug` | публичный | Объект по slug |
+| `GET` | `/api/properties/by-id/:id` | токен | Объект по id, включая черновики |
 | `POST` | `/api/properties` | токен | Создать объект |
 | `PATCH` | `/api/properties/:id` | токен | Обновить объект |
 | `DELETE` | `/api/properties/:id` | токен | Архивировать объект |
